@@ -10,7 +10,7 @@ import java.util.Arrays;
  */
 public class BubbleSort {
 
-    private void swap(int[] a, int i, int j) {
+    private static void swap(int[] a, int i, int j) {
         int temp = a[i];
         a[i] = a[j];
         a[j] = temp;
@@ -18,7 +18,7 @@ public class BubbleSort {
         System.out.println(Arrays.toString(a));
     }
 
-    public void bubbleSort(int[] a) {
+    public static void bubbleSort(int[] a) {
         for (int i = 0; i < a.length - 1; i++) {
             for (int j = 0; j < a.length - 1 - i; j++) {
                 if (a[j] > a[j + 1]) {
@@ -29,7 +29,7 @@ public class BubbleSort {
         }
     }
 
-    public void bubbleSort2(int[] a) {
+    public static void bubbleSort2(int[] a) {
         //发生了交换就为true, 没发生就为false，第一次判断时必须标志位true。
         boolean flag = true;
         int k = a.length;
@@ -51,7 +51,7 @@ public class BubbleSort {
         }
     }
 
-    public void bubbleSort3(int[] a) {
+    public static void bubbleSort3(int[] a) {
         //flag来记录最后交换的位置，也就是排序的尾边界
         int flag = a.length;
         //排序未结束标志
@@ -73,13 +73,12 @@ public class BubbleSort {
     }
 
     public static void main(String[] args) {
-        BubbleSort bubbleSort = new BubbleSort();
         int[] a = {49, 38, 65, 97, 76, 13, 27, 49};
         System.out.println(Arrays.toString(a));
-        bubbleSort.bubbleSort(a);
+        bubbleSort(a);
         System.out.println(Arrays.toString(a));
-        bubbleSort.bubbleSort2(a);
+        bubbleSort2(a);
         System.out.println(Arrays.toString(a));
-        bubbleSort.bubbleSort3(a);
+        bubbleSort3(a);
     }
 }
