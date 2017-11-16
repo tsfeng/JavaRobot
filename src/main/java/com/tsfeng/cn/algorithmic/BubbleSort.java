@@ -1,4 +1,4 @@
-package com.tsfeng.cn;
+package com.tsfeng.cn.algorithmic;
 
 import java.util.Arrays;
 
