@@ -77,6 +77,8 @@ public class Singleton {
 
     /**
      * local variable increases performance by 25 percent
+	 * Joshua Bloch "Effective Java, Second Edition", p. 283-284
+	 * Effective Java 中文版 P250
      */
 	public static Singleton getInstance2(){
 		Singleton result = instance;
