@@ -35,7 +35,7 @@ public class Item048 {
     public static void ss(){
         int money = 100;
         int buyNum = 0;
-        for (float price = 10; money >= price; price += 10) {
+        for (int price = 10; money >= price; price += 10) {
             money -= price;
             buyNum++;
         }
