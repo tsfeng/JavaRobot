@@ -13,6 +13,15 @@ import java.util.*;
  */
 public class ArrayDemo {
     public static void main(String[] args) {
+        List<String> list = new ArrayList<String>();
+        add(list, 10);
+        String s = list.get(0);
+
+//        ArrayList<String> list = new ArrayList<String>(Arrays.asList("a", "b", "c", "d"));
+//        for (int i = 0; i < list.size(); i++) {
+//            list.remove(i);
+//        }
+//        System.out.println(list);
         //0. Declare an array
         String[] aArray = new String[5];
         String[] bArray = {"a", "b", "c", "d", "e"};
@@ -54,14 +63,14 @@ public class ArrayDemo {
         System.out.println(j);
 
         //7. Covnert an ArrayList to an array
-        String[] stringArray7 = {"a", "b", "c", "d", "e", "f"};
-        ArrayList<String> arrayList7 = new ArrayList<>(Arrays.asList(stringArray7));
-        String[] stringArr7 = new String[arrayList7.size()];
-        arrayList7.toArray(stringArr7);
-        for (String s : stringArr7) {
-            System.out.print(s);
-        }
-        System.out.println();
+//        String[] stringArray7 = {"a", "b", "c", "d", "e", "f"};
+//        ArrayList<String> arrayList7 = new ArrayList<>(Arrays.asList(stringArray7));
+//        String[] stringArr7 = new String[arrayList7.size()];
+//        arrayList7.toArray(stringArr7);
+//        for (String s : stringArr7) {
+//            System.out.print(s);
+//        }
+//        System.out.println();
 
         //8. Convert an array to a set
         Set<String> set = new HashSet<>(Arrays.asList(stringArray));
@@ -78,5 +87,9 @@ public class ArrayDemo {
         //create a new array
         int[] removed = ArrayUtils.removeElement(intArray, 3);
         System.out.println(Arrays.toString(removed));
+    }
+
+    public static void add(List list, Object o){
+        list.add(o);
     }
 }

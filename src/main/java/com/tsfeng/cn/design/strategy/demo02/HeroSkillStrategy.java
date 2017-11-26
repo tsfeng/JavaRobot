@@ -2,7 +2,7 @@ package com.tsfeng.cn.design.strategy.demo02;
 
 /**
  * @author tsfeng
- * @version 创建时间 2017/11/23 16:21
+ * @version 创建时间 2017/11/25 16:21
  */
 public interface HeroSkillStrategy {
 
