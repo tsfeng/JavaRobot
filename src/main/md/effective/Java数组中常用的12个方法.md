@@ -1,5 +1,5 @@
 ###**写在前面**
-下面是Java数组常用的10种方法。它们是stackoverflow上投票最多的问题。
+下面是Java数组中常用的10种方法。它们是stackoverflow上投票最多的问题。
 ####1、声明一个数组
 ```java
 String[] aArray = new String[5];
@@ -41,7 +41,7 @@ int[] combinedIntArray = ArrayUtils.addAll(intArray, intArray2);
 ```java
 method(new String[]{"a", "b", "c", "d", "e"});
 ```
-####7、将提供的数组中的元素连接到一个字符串中
+####7、将数组中的元素连接到一个字符串中
 ```java
 // containing the provided list of elements
 // Apache common lang
@@ -58,7 +58,7 @@ arrayList.toArray(stringArr);
 for (String s : stringArr)
 	System.out.println(s);
 ```
-####9、将Array转换为Set
+####9、将Array转换换为Set
 ```java
 Set<String> set = new HashSet<String>(Arrays.asList(stringArray));
 System.out.println(set);
@@ -84,3 +84,6 @@ for (byte t : bytes) {
    System.out.format("0x%x ", t);
 }
 ```
+
+译文地址：
+https://www.programcreek.com/2013/09/top-10-methods-for-java-arrays/
