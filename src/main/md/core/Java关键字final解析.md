@@ -29,12 +29,31 @@ public class FinalDemo {
         //编译时错误：Cannot assign a value to final variable 'foo'
         //f.finalList = new ArrayList<>();
         System.out.println(JSON.toJSONString(f.finalList));
+       
+        String a = "hello world";
+        final String b = "hello";
+        String c = b + " world";
+        System.out.println("a == c：" + (a == c));
+
+        final String b2 = getHello();
+        String c2 = b2 + " world";
+        System.out.println("a == c2：" + (a == c2));
+
+        String b3 = "hello";
+        String c3 = b3 + " world";
+        System.out.println("a == c3：" + (a == c3));
+    }
+    public static String getHello() {
+        return "hello";
     }
 }
 ```
 执行代码后，打印结果:
 ```
 ["hello","world"]
+a == c：true
+a == c2：false
+a == c3：false
 ```
 1、在上面这段代码中，finalList是一个实例变量，当我们创建FinalDemo类的对象时，实例变量finalList会被复制到FinalDemo类的对象中。如果我们在构造方法内对finalList赋值，那么编译器就知道构造方法只会被调用一次，所以在构造方法内对final变量finalList赋值没有问题。
 如果我们在一个方法内部对finalList赋值，编译器知道一个方法可以被多次调用，这意味着该值有可能被多次改变，这是final变量所不允许的。所以通过setList方法对final变量赋值会导致编译时错误。
@@ -48,6 +67,8 @@ public class FinalDemo {
 private static final List<String> finalList = new ArrayList<>();
 ```
 现在finalList是一个静态变量，当我们创建FinalDemo类的对象时，变量finalList不会被复制到FinalDemo类的对象中，因为它是静态的。现在finalList不是不是每个对象的对立属性，他是FinalDemo类的一个属性，可以被多个对象看到；那么在创建多个对象的时候，如果每个对象都是使用new关键字创建的，这意味着最终调用构造方法时该值有可能被多次改变。这是会导致编译时错误的。
+4、上面代码a==c打印true，其他打印false；
+final修饰的变量，如果在编译期间能知道它的确切值，则编译器会把它当做编译期常量使用。也就是说在用到该final变量的地方，相当于直接访问的这个常量，不需要在运行时确定。但只有在编译期间能确切知道final变量值的情况下，编译器才会进行这样的优化，这也是a==c2打印false的原因。
 ###**final总结**​
 1、final关键字可以用来修饰类、方法和变量（包括成员变量和局部变量）；
 2、final成员变量必须在声明的时候初始化或者在构造器中初始化，否则就会报编译错误；(局部变量只需要保证在使用之前被初始化赋值即可)

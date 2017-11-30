@@ -49,6 +49,13 @@ public class FinalDemo {
         String c3 = b3 + " world";
         System.out.println("a == c3：" + (a == c3));
 
+        int i = 1;
+        int i1 = i + 2;
+
+        final int i2 = 2;
+        int i3 = i2 + 3;
+
+
     }
 
     public static String getHello() {
