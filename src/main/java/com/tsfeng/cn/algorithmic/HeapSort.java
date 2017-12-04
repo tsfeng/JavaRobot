@@ -19,8 +19,7 @@ public class HeapSort {
 
     /**
      *排序，最大值放在末尾，data虽然是最大堆，在排序后就成了递增的
-     *
-     *@paramdata
+     *@param data 要排序数组
      */
     private static void heapSort(int[] data){
         //末尾与头交换，交换后调整最大堆
@@ -44,7 +43,7 @@ public class HeapSort {
     /**
      * 创建最大堆
      *
-     * @param data
+     * @param data  数组对象
      * @param heapSize 需要创建最大堆的大小，一般在sort的时候用到，因为最多值放在末尾，末尾就不再归入最大堆了
      * @param index    当前需要创建最大堆的位置
      */
@@ -72,9 +71,8 @@ public class HeapSort {
 
     /**
      * 父节点位置
-     *
-     * @return
-     * @paramcurrent
+     * @param current 当前节点位置
+     * @return 父节点位置
      */
     private static int getParentIndex(int current) {
         return (current - 1) >> 1;
@@ -82,9 +80,8 @@ public class HeapSort {
 
     /**
      * 左子节点position注意括号，加法优先级更高
-     *
-     * @return
-     * @paramcurrent
+     * @param current 当前节点位置
+     * @return 左子节点position
      */
     private static int getChildLeftIndex(int current) {
         return (current << 1) + 1;
@@ -92,9 +89,8 @@ public class HeapSort {
 
     /**
      * 右子节点position
-     *
-     * @return
-     * @paramcurrent
+     * @param current 当前节点位置
+     * @return 右子节点position
      */
     private static int getChildRightIndex(int current) {
         return (current << 1) + 2;

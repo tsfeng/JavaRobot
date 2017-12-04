@@ -1,7 +1,6 @@
 package com.tsfeng.cn.effective;
 
 import java.math.BigDecimal;
-import java.text.Bidi;
 
 /**
  * @author tsfeng

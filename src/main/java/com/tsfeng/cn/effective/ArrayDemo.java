@@ -1,8 +1,5 @@
 package com.tsfeng.cn.effective;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.nio.ByteBuffer;
 import java.util.*;
 

@@ -9,7 +9,7 @@ public class StringDemo {
         String s = "abcd";
         String s1 = s.concat("abcd");
 
-        String s2 = s.substring(0);
+        String s2 = s;
         String s3 = s1.substring(4);
 
         System.out.println(s);

@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSON;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author tsfeng
@@ -34,9 +33,9 @@ public class MD5Util {
         int len = bytes.length;
         StringBuilder buf = new StringBuilder(len * 2);
         // 把密文转换成十六进制的字符串形式
-        for (int j = 0; j < len; j++) {
-            buf.append(HEX_DIGITS[(bytes[j] >> 4) & 0x0f]);
-            buf.append(HEX_DIGITS[bytes[j] & 0x0f]);
+        for (byte aByte : bytes) {
+            buf.append(HEX_DIGITS[(aByte >> 4) & 0x0f]);
+            buf.append(HEX_DIGITS[aByte & 0x0f]);
         }
         return buf.toString();
     }
