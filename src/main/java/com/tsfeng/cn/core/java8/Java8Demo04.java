@@ -18,8 +18,6 @@ public class Java8Demo04 {
     }
 }
 
-
-
 interface Vehicle {
     //Java8接口新增默认方法
     default void print(){
@@ -30,6 +28,7 @@ interface Vehicle {
     static void blowHorn(){
         System.out.println("按喇叭!!!");
     }
+
 }
 
 interface FourWheeler {
