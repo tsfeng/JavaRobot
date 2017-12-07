@@ -1,5 +1,7 @@
 package com.tsfeng.cn.core.java8;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * @author tsfeng
  * @version 创建时间 2017/12/5 13:51
@@ -9,14 +11,26 @@ public class Java8Demo03 {
 
     public static void main(String args[]){
 
-        Runnable r1 = new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 System.out.println("run1...");
             }
-        };
+        });
 
-        Runnable r2 = () -> System.out.println("run2...");
+        Thread t2 = new Thread(() -> System.out.println("run1..."));
+
+//        t.start();
+
+//        Runnable r1 = new Runnable() {
+//            @Override
+//            public void run() {
+//                System.out.println("run1...");
+//            }
+//        };
+//
+//        Runnable r2 = () -> System.out.println("run2...");
+
 //
 //        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
 //
@@ -41,6 +55,10 @@ public class Java8Demo03 {
 //
 //        System.out.println("输出大于 3 的所有数字:");
 //        eval(list, n-> n > 3 );
+
+//        MathOperation multiplication = (int a, int b) -> {return  a * b;};
+//
+//        System.out.println(JSON.toJSONString(multiplication));
     }
 
 //    public static void eval(List<Integer> list, Predicate<Integer> predicate) {
@@ -50,6 +68,18 @@ public class Java8Demo03 {
 //            }
 //        }
 //    }
+
+    interface MathOperation {
+        int operation(int a, int b);
+    }
+
+    interface GreetingService {
+        void sayMessage(String message);
+    }
+
+    private int operate(int a, int b, MathOperation mathOperation){
+        return mathOperation.operation(a, b);
+    }
 }
 
 
@@ -59,3 +89,4 @@ public class Java8Demo03 {
 //
 //    String toString();
 //}
+
