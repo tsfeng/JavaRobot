@@ -22,12 +22,14 @@ public interface FunctionalInterfaceDemo extends SuperInterface1, SuperInterface
 
 
 interface SuperInterface1 {
+    void hello();
 //    int m(Iterable<String> arg);
 //    Iterable m(Iterable<String> arg);
-    int m(Iterable<String> arg);
+//    int m(Iterable<String> arg);
 }
 
 interface SuperInterface2 {
+    void hello();
 //    int m(Iterable<String> arg);
 //    Iterable<String> m(Iterable arg);
 //    int m(Iterable<Integer> arg);
