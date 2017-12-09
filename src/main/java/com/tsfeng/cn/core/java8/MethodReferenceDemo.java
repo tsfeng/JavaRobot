@@ -18,9 +18,6 @@ public class MethodReferenceDemo {
 
         System.out.println("质数：" + primeNumbers);
 
-
-        List list = new ArrayList();
-        List list2 = list;
     }
 
 

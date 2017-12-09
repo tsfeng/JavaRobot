@@ -25,7 +25,7 @@ public class Java8Demo01 {
     @Test
     public void testLambda(){
         list.forEach(System.out::println);
-        list.forEach(e -> System.out.println("方式二："+e));
+        list.forEach(e -> System.out.println(e));
     }
 
 }

@@ -19,6 +19,8 @@ public class Java8Demo03 {
         });
 
         Thread t2 = new Thread(() -> System.out.println("run1..."));
+        Thread t3 = new Thread(System.out::println);
+
 
 //        t.start();
 

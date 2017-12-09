@@ -21,3 +21,5 @@ http://viralpatel.net/blogs/Lambda-expressions-java-tutorial/
 http://blog.oneapm.com/apm-tech/226.html
 
 https://blog.idrsolutions.com/2015/02/java-8-method-references-explained-5-minutes/
+
+http://www.baeldung.com/category/java/
