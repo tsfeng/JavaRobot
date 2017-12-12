@@ -81,4 +81,8 @@ public class StreamDemo {
 ####5、流只能遍历一次：
 我们可以把流想象成一条流水线，流水线的源头是我们的数据源(一个集合)，数据源中的元素依次被输送到流水线上，我们可以在流水线上对元素进行各种操作。一旦元素走到了流水线的另一头，那么这些元素就被“消费掉了”，我们无法再对这个流进行操作。当然，我们可以从数据源那里再获得一个新的流重新遍历一遍。
 
+https://www.ibm.com/developerworks/cn/java/j-lo-java8streamapi/
 
+https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html
+
+http://ifeve.com/stream/
