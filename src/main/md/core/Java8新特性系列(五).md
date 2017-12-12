@@ -1,67 +1,84 @@
 Java8于2014年3月18日发布，Java8作为Java的一个重大版本，新增了非常多的特性；但很多Java开发人员由于项目原因，在工作中没机会去使用Java8的新特性。目前Java9已于2017年9月21日正式发布，如果你对Java8的新特性还不是很了解，但愿《Java8新特性系列》文章对你有所帮助。
 本篇将介绍Java8新特性之**流(Stream) **。
-###**什么是Stream**
-众所周知，集合操作非常麻烦，若要对集合进行筛选、投影，需要写大量的代码，而流是以声明的形式操作集合，它就像SQL语句，我们只需告诉流需要对集合进行什么操作，它就会自动进行操作，并将执行结果交给你，无需我们自己手写代码。
-
+###**认识Stream**
+显然，这里的Stream和I/O流不同，虽然Java8 Stream与Java I/O中的InputStream和OutputStream在名字上比较类似，但他们是完全不同的概念。它也不同于StAX对XML解析的Stream，也不是Amazon Kinesis对大数据实时处理的Stream。
+Java8中的Stream是对集合（Collection）对象功能的增强，它专注于对集合对象进行各种非常便利、高效的聚合操作（aggregate operation），或者大批量数据操作 (bulk data operation)。Stream API借助于同样新出现的Lambda表达式，极大的**提高编程效率和程序可读性**。同时它提供串行和并行两种模式进行汇聚操作，并发模式能够充分利用多核处理器的优势，使用fork/join并行方式来拆分任务和加速处理过程。通常编写并行代码很难而且容易出错, 但使用Stream API无需编写一行多线程的代码，就可以**很方便地写出高性能的并发程序**。所以说，Java8中首次出现的java.util.stream是一个函数式语言+多核时代综合影响的产物。
 ###**Java流示例**
-例如：统计字符串列表中长度小于5的字符串的数量，常规写法如下
+先来一个例子，看看Stream怎么应用到具体的代码中。
+例如、统计列表中不为null的元素的数量，常规的写法如下：
 ```java
 //示例1
 public class StreamDemo {
     public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
-        list.add("hello");
-        list.add("world");
-        list.add("java");
-        list.add("stream");
+        List<Integer> nums = Arrays.asList(1, null, 3, 4, null, 6);
         int count = 0;
-        for (String str : list) {
-            if (str.length() < 5) {
+        for (Integer num : nums) {
+            if (num != null) {
                 count++;
             }
         }
-        System.out.println("长度小于5的字符串有：" + count);
+        System.out.println(count);
     }
 }
 ```
-用Java8的流则可以改写成如下
+用Java8的流(Stream)则可以改写成如下：
 ```java
 //示例2
 public class StreamDemo {
     public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
-        list.add("hello");
-        list.add("world");
-        list.add("java");
-        list.add("stream");
-        long count = list.stream().filter(str -> str.length() < 5).count();
-        System.out.println("长度小于5的字符串有：" + count);
+        List<Integer> nums = Arrays.asList(1, null, 3, 4, null, 6);
+        long count = nums.stream().filter(num -> num != null).count();
+        System.out.println(count);
     }
 }
 ```
-###**两种写法的区别**
-示例1中，通过遍历整个列表来查找长度小于5的字符串。这个代码没有并行性；
-示例2中，stream()方法返回包含所有字符串的流，filter()方法返回长度小于5的字符串的流，count()方法将此流减少为结果。所有这些操作都是并行的，这意味着我们可以在流的帮助下并行化代码。**使用流的并行执行操作比不使用流的顺序执行要快**。
-###**流如何工作**
-
-###**中间操作(Intermediate operations)**
-中间操作总是被懒惰地执行。换句话说，在达到最终操作之前，它们不会运行。
-
-1、filter:filter操作返回满足作为参数传入操作的谓词的元素流。过滤器之前和之后的元素本身将具有相同的类型，但元素的数量可能会改变。
-2、map:map操作在传入的函数作为参数处理后返回元素流。映射之前和之后的元素可能有不同的类型，但会有相同的元素总数。
-3、distinct:distinct操作是过滤器操作的特例。Distinct返回一个元素流，使得每个元素在流中是唯一的，基于元素的equals方法。
-下面的表格统计以下常用的中间操作
-```table
-Function(-)     |      保留数量(-)    |    保留类型(-)  |    保留订单(-) 
-map        |      ✔       |    ✘       |          ✔
-filter        |      ✘       |   ✔        |         ✔
-distinct    |      ✘       |   ✔       |        ✔
-sorted      |       ✔    |      ✔       |       ✘
-peek        |       ✔    |      ✔       |       ✔
+上面两种写法返回相同的结果，接下来看看下面这段关键代码都干了些什么？
+```java
+ long count = nums.stream().filter(num -> num != null).count();
 ```
-###**最终操作(Terminal operations)**
-最终操作总是急切地执行。该操作将启动流中存在的所有先前惰性操作的执行。终端操作要么返回具体的类型，要么产生副作用。例如，调用Integer :: sum操作的reduce 操作将产生一个Optional，这是一个具体的类型。或者，forEach操作不返回一个具体的类型，但你可以添加一个副作用，如打印出每个元素。收集终端操作是一种特殊的减少类型，它从流中获取所有元素，并可以生成一个Set，Map或List。这是一个列表总结。
+看这段代码之前先了解一下Stream操作的分类。
+###**Stream操作分类**
+流的操作分为两种，分别为**中间操作**和**最终操作**。
+中间操作又可以分为**无状态**的(Stateless)和**有状态**的(Stateful)。无状态中间操作是指元素的处理不受前面元素的影响；而有状态的中间操作必须等到所有元素处理之后才知道最终结果。比如排序是有状态操作，在读取所有元素之前并不能确定排序结果；
+最终操作又可以分为**短路操作**和**非短路操作**。短路操作是指不用处理全部元素就可以返回结果，比如找到第一个满足条件的元素。之所以要进行如此精细的划分，是因为底层对每一种情况的处理方式不同。
+```table
+操作(-)    |   分类(<)   |   例子(<)  |  
+中间操作 |   无状态    |  filter()、map()、flatMap()、 peek()等
+中间操作 |   有状态    |  distinct()、sorted()、limit()、skip() 等
+最终操作 |   非短路   |  forEach()、count()等
+最终操作 |   短路      |  anyMatch()、findFirst()等
+```
+###**Stream的操作步骤**
+####1、创建Stream
+有多种方式生成 Stream Source
+- [x] 从 Collection 和数组
+    - Collection.stream()
+    - Collection.parallelStream()
+    - Arrays.stream(T array)
+- [x] 从Stream类的静态工厂方法
+    - 如 Stream.of(Object[]) 等
+- [x] 从 BufferedReader
+    - java.io.BufferedReader.lines()
+- [x] 其他方式
+    - Random.ints()
+    - BitSet.stream()
+    - Pattern.splitAsStream(java.lang.CharSequence)
+    - JarFile.stream()
+####2、转换Stream：
+每次转换原有Stream对象不改变，返回一个新的Stream对象，这些操作都可以被称为中间操作
+####3、聚合：
+执行聚合操作后本次流结束，你将获得一个执行结果。这些操作被称为最终操作
 
-https://zeroturnaround.com/rebellabs/java-8-streams-cheat-sheet/
-http://ifeve.com/stream/
+###**Stream有哪些特征**
+####1、流不是数据结构，没有存储：
+流不是存储元素的数据结构；而是通过计算操作的流水线，传递来自诸如数据结构，数组，生成器函数或I/O通道等来源的元素。
+####2、流不能改变数据源：
+流上的操作会产生结果，但不会修改其来源。
+####3、惰性执行：
+许多流操作（例如过滤，映射或重复删除）可以被懒惰地实现，从而为优化提供机会。流操作分为中间操作和最终操作。中间操作总是懒散的。
+####4、流可以是无限大的：
+集合类持有的所有元素都是存储在内存中的，非常巨大的集合类会占用大量的内存；而Stream的元素却是在访问的时候才被计算出来，占用内存很少。
+####5、流只能遍历一次：
+我们可以把流想象成一条流水线，流水线的源头是我们的数据源(一个集合)，数据源中的元素依次被输送到流水线上，我们可以在流水线上对元素进行各种操作。一旦元素走到了流水线的另一头，那么这些元素就被“消费掉了”，我们无法再对这个流进行操作。当然，我们可以从数据源那里再获得一个新的流重新遍历一遍。
+
 
