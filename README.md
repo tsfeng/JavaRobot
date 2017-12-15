@@ -48,7 +48,7 @@
     - 待完善
 #
 - JVM(Java虚拟机)
-    - JVM内存区域
+    - [JVM内存区域](https://github.com/tsfeng/JavaRobot/blob/master/blog/JVM/JVM%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F.md)
     - 类加载
     - 垃圾回收算法
 #
