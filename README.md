@@ -122,4 +122,4 @@
     - http://www.baeldung.com/category/java/
     
 - 欢迎关注我的微信公众号JavaRobot    
-    ![](https://github.com/tsfeng/JavaRobot/raw/master/src/main/resources/8cm.jpg)
+    ![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/8cm.jpg)
