@@ -77,5 +77,5 @@
     - https://www.infoq.com  
     - http://www.baeldung.com/category/java/
     
-    
+- 欢迎关注我的微信公众号JavaRobot    
     ![](https://github.com/tsfeng/JavaRobot/raw/master/src/main/resources/8cm.jpg)
