@@ -68,14 +68,13 @@
 - Algorithm(算法)
     - 排序算法
         - 插入排序
-            - 直接插入排序
-            - 二分插入排序
+            - [直接插入排序和二分插入排序](https://github.com/tsfeng/JavaRobot/blob/master/blog/Algorithm/SortAlgorithm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B9%8B%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F.md)
             - 希尔排序
         - 选择排序
             - 简单选择排序
             - 堆排序
         - 交换排序
-            - 冒泡排序
+            - [冒泡排序](https://github.com/tsfeng/JavaRobot/blob/master/blog/Algorithm/SortAlgorithm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B9%8B%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F.md)
             - 快速排序
         - 分布排序
             - 基数排序
