@@ -82,7 +82,8 @@
     - 查找算法
     - leetcode
 #
-- **[DesignPattern(设计模式)](https://github.com/tsfeng/JavaRobot/blob/master/blog/DesignPattern/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)**
+- **DesignPattern(设计模式)**
+    - [设计模式总纲](https://github.com/tsfeng/JavaRobot/blob/master/blog/DesignPattern/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
     - 创建型模式
         - 工厂方法模式(FactoryMethod)
         - 抽象工厂模式(AbstractFactory)
