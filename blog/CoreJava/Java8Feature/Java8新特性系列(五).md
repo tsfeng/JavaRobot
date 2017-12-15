@@ -1,5 +1,5 @@
 在上一篇[Java8新特性系列（四）](https://github.com/tsfeng/JavaRobot/blob/master/blog/CoreJava/Java8Feature/Java8%E6%96%B0%E7%89%B9%E6%80%A7%E7%B3%BB%E5%88%97(%E5%9B%9B).md)中，我们介绍了Java8新特性之方法引用。  
-本篇将介绍Java8新特性之**流(Stream) **。  
+本篇将介绍Java8新特性之**流(Stream)**。  
 ### **认识Stream**  
 首先，这里的Stream和I/O流不同，虽然Java8 Stream与Java I/O中的InputStream和OutputStream在名字上比较类似，但他们是完全不同的概念。  
 其次，它也不同于StAX（Streaming API for XML，缩写StAX）对XML解析的Stream，StAX是用于读写XML文档的应用程序接口。  
