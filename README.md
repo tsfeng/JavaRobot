@@ -1,7 +1,9 @@
 # **记录学习过程，逐渐完善**
 
-- JavaSE(Java基础) 
-- 源码解读
+- JavaSE(Java基础)  
+
+- **源码解读**  
+
     - List源码系列
         - ArrayList
         - LinkedList
@@ -39,7 +41,7 @@
     - 查找算法
     - leetcode
 #
-- DesignPattern(设计模式)
+- **DesignPattern(设计模式)**
     - 创建型模式
         - 工厂方法模式(FactoryMethod)
         - 抽象工厂模式(AbstractFactory)
