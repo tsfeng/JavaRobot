@@ -18,9 +18,9 @@
 
 - **源码解读**  
     - String源码系列
-        - [String]()
-        - [StringBuffer]()
-        - [StringBuilder]()
+        - String
+        - StringBuffer
+        - StringBuilder
 
     - List源码系列
         - ArrayList
@@ -86,7 +86,7 @@
     - 创建型模式
         - 工厂方法模式(FactoryMethod)
         - 抽象工厂模式(AbstractFactory)
-        - 单例模式(Singleton)
+        - [单例模式(Singleton)]()
         - 建造者模式(Builder)
         - 原型模式(ProtoType)
         
