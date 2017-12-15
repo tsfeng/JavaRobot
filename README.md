@@ -1,8 +1,11 @@
-# **记录学习过程，逐渐完善**
+# **记录学习过程，逐渐完善**  
+
+### 说明：如果特别说明，所有代码都基于JDK8  
 ---
 
 - JavaSE(Java基础)  
     
+    - Java Core
     - Java String
     - Java Arrays
     - Java Collections
@@ -14,15 +17,21 @@
         - [Java8新特性系列(五)](https://github.com/tsfeng/JavaRobot/blob/master/blog/CoreJava/Java8Feature/Java8%E6%96%B0%E7%89%B9%E6%80%A7%E7%B3%BB%E5%88%97(%E4%BA%94).md)
 
 - **源码解读**  
+    - String源码系列
+        - [String]()
+        - [StringBuffer]()
+        - [StringBuilder]()
 
     - List源码系列
         - ArrayList
         - LinkedList
+        - CopyOnWriteArrayList
         - Vector
         
     - Map源码系列    
         - HashMap
         - LinkedHashMap
+        - ConcurrentHashMap
         - TreeMap
         - Hashtable
         
@@ -35,20 +44,41 @@
     - 待完善
 #
 - JVM(Java虚拟机)
+    - JVM内存模型
+    - 类加载
+    - 垃圾回收算法
 #
 - JavaConcurrent(Java并发)
+
 #
 - DataStructure(数据结构)
-    - 字符串
     - 数组
-    - 链表
     - 栈
     - 队列
+    - 链表
     - 树
     - 图
+    - 堆
+    - 散列表
+    
 #
 - Algorithm(算法)
     - 排序算法
+        - 插入排序
+            - 直接插入排序
+            - 二分插入排序
+            - 希尔排序
+        - 选择排序
+            - 简单选择排序
+            - 堆排序
+        - 交换排序
+            - 冒泡排序
+            - 快速排序
+        - 分布排序
+            - 基数排序
+            - 桶排序
+        - 归并排序
+        
     - 查找算法
     - leetcode
 #

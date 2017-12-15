@@ -5,7 +5,7 @@
 Tip        |      ￥18    |  **光标在表格区域时，右键点击，有更简单的“编辑表格”命令**
 ```
 
-```table
+ ``` table
  Method       |      Java8(-)    |    Java7(-)
  int size();        |  Y  |  Y
 boolean isEmpty();       |  Y  |  Y
