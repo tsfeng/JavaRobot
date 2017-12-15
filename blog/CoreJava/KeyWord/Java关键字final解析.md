@@ -1,12 +1,12 @@
 ### **认识final**​
 在Java中，final关键字可以用来修饰类、方法和变量（包括成员变量和局部变量）。  
-在JLS, Java SE 8 Edition, Section 4.12.4，final Variables，描述到:  
+在JLS, Java SE 8 Edition, Section 4.12.4，final Variables，描述到：  
     
     一个变量可以被声明为final，一个final变量只能被赋值一次，如果一个final变量被赋值会导致编译时错误，除非这个final变量在被赋值之前确定是未赋值的。
-在JLS, Java SE 8 Edition, Section 8.4.3.3，final Methods，描述到:  
+在JLS, Java SE 8 Edition, Section 8.4.3.3，final Methods，描述到：  
 
     一个方法可以被声明为final以防止子类覆盖或隐藏它。试图覆盖或隐藏一个final方法会导致编译时错误。
-在JLS, Java SE 8 Edition, Section 8.1.1.2，final Classes，描述到:  
+在JLS, Java SE 8 Edition, Section 8.1.1.2，final Classes，描述到：  
 
     一个类可以被声明为final如果它的定义是完整的并且不需要任何子类。如果某个final类的名称出现在另一个类声明的 extends子句中，则会导致编译时错误；这意味着一个final类不能有任何子类。如果一个类同时被声明为final和abstract，则会导致编译时错误；因为这个类的实现不可能完成。
 ### **怎么理解**​  
@@ -48,7 +48,7 @@ public class FinalDemo {
     }
 }
 ```
-执行代码后，打印结果:  
+执行代码后，打印结果：  
 ```
 ["hello","world"]
 a == c：true
@@ -58,11 +58,11 @@ a == c3：false
 1、在上面这段代码中，finalList是一个实例变量，当我们创建FinalDemo类的对象时，实例变量finalList会被复制到FinalDemo类的对象中。如果我们在构造方法内对finalList赋值，那么编译器就知道构造方法只会被调用一次，所以在构造方法内对final变量finalList赋值没有问题。  
 如果我们在一个方法内部对finalList赋值，编译器知道一个方法可以被多次调用，这意味着该值有可能被多次改变，这是final变量所不允许的。所以通过setList方法对final变量赋值会导致编译时错误。  
 2、从上面代码执行结果知道，final变量finalList的内容是可以改变的，这是我们要说的另一个问题。  
-调用存储在final变量中的对象的方法与final的语义无关，换句话说:**final只是关于引用本身，而不是关于引用对象的内容。**  
-**值类型**:int、double等基本数据类型，它将确保值不能改变；  
-**引用类型**:对于引用对象，final确保引用永远不会改变，这意味着它将始终引用同一个对象。它不保证被引用的对象内部的值保持不变。  
+调用存储在final变量中的对象的方法与final的语义无关，换句话说：**final只是关于引用本身，而不是关于引用对象的内容。**  
+**值类型**：int、double等基本数据类型，它将确保值不能改变；  
+**引用类型**：对于引用对象，final确保引用永远不会改变，这意味着它将始终引用同一个对象。它不保证被引用的对象内部的值保持不变。  
 因此，final确保变量finalList始终引用相同的列表对象，但列表对象的内容可能发生变化。  
-3、修改代码如下:  
+3、修改代码如下：  
 ```
 private static final List<String> finalList = new ArrayList<>();
 ```

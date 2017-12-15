@@ -6,6 +6,9 @@
 - JavaSE(Java基础)  
     
     - Java Core
+        - 关键字
+            - [final关键字](https://github.com/tsfeng/JavaRobot/blob/master/blog/CoreJava/KeyWord/Java%E5%85%B3%E9%94%AE%E5%AD%97final%E8%A7%A3%E6%9E%90.md)
+            - [transient关键字](https://github.com/tsfeng/JavaRobot/blob/master/blog/CoreJava/KeyWord/Java%E5%85%B3%E9%94%AE%E5%AD%97transient%E8%A7%A3%E6%9E%90.md)
     - Java String
     - Java Arrays
     - Java Collections
@@ -44,7 +47,7 @@
     - 待完善
 #
 - JVM(Java虚拟机)
-    - JVM内存模型
+    - JVM内存区域
     - 类加载
     - 垃圾回收算法
 #
