@@ -1,14 +1,43 @@
 # **记录学习过程，逐渐完善**
 
 - JavaSE(Java基础) 
+- 源码解读
+    - List源码系列
+        - ArrayList
+        - LinkedList
+        - Vector
+        
+    - Map源码系列    
+        - HashMap
+        - LinkedHashMap
+        - TreeMap
+        - Hashtable
+        
+    - Set源码系列    
+        - HashSet
+        - LinkedHashSet
+        - TreeSet
+        - HashSet
+        
+    - 待完善
 #
 - JVM(Java虚拟机)
 #
 - JavaConcurrent(Java并发)
 #
 - DataStructure(数据结构)
+    - 字符串
+    - 数组
+    - 链表
+    - 栈
+    - 队列
+    - 树
+    - 图
 #
 - Algorithm(算法)
+    - 排序算法
+    - 查找算法
+    - leetcode
 #
 - DesignPattern(设计模式)
     - 创建型模式
@@ -47,3 +76,6 @@
     - https://www.journaldev.com/  
     - https://www.infoq.com  
     - http://www.baeldung.com/category/java/
+    
+    
+    ![](https://github.com/tsfeng/JavaRobot/raw/master/src/main/resources/8cm.jpg)
