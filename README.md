@@ -86,7 +86,7 @@
     - 创建型模式
         - 工厂方法模式(FactoryMethod)
         - 抽象工厂模式(AbstractFactory)
-        - [单例模式(Singleton)]()
+        - [单例模式(Singleton)](https://github.com/tsfeng/JavaRobot/blob/master/blog/DesignPattern/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.md)
         - 建造者模式(Builder)
         - 原型模式(ProtoType)
         
@@ -99,7 +99,7 @@
     	- 组合模式(Composite)
     	- 享元模式(Flyweight)
     - 行为型模式
-        - 策略模式(Strategy)
+        - [策略模式(Strategy)](https://github.com/tsfeng/JavaRobot/blob/master/blog/DesignPattern/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F.md)
         - 模板方法模式(Template Method)
         - 观察者模式(Observer)
         - 迭代子模式(Iterator)
