@@ -18,6 +18,7 @@ CharSequence接口定义了四种方法：
 - int length()：返回序列的长度。  
 - subSequence(int start, int end)：返回由开始和结束参数指示的子字符串。  
 - toString()：返回String序列的表示。  
+
 如果使用CharSequence作为一个方法的参数类型，则对于这个方法，可以传递String、StringBuilder和StringBuffer作为参数。
 # **String**   
 Java中，String类代表字符串。
