@@ -20,7 +20,6 @@ CharSequence接口定义了四种方法：
 - toString()：返回String序列的表示。  
 
 **如果使用CharSequence作为一个方法的参数类型，则对于这个方法，可以传递String、StringBuilder和StringBuffer作为参数。**  
-**CharSequence实例作为Set的元素或者Map的key是不合适的。**    
 # **String**   
 Java中，String类代表字符串。
 它是一个不可变的类，也是Java中最常用的类型之一。  
