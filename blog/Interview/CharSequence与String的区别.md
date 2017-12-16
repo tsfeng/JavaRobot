@@ -3,7 +3,7 @@ CharSequence和String是Java中两个不同的基本概念。
 # **CharSequence**   
 CharSequence是一个表示字符序列的接口。 
 这个接口不强制实现可变性；因此，可变类和不可变类都实现了这个接口。  
-String、StringBuilder和StringBuffer都实现了这个接口。
+String、StringBuilder和StringBuffer都实现了这个接口。  
 当然，一个接口不能直接实例化，它需要一个实现来实例化一个变量：  
 ```
 CharSequence charSequence = "hello";
