@@ -19,7 +19,7 @@ CharSequence接口定义了四种方法：
 - subSequence(int start, int end)：返回由开始和结束参数指示的子字符串。  
 - toString()：返回String序列的表示。  
 
-如果使用CharSequence作为一个方法的参数类型，则对于这个方法，可以传递String、StringBuilder和StringBuffer作为参数。
+**如果使用CharSequence作为一个方法的参数类型，则对于这个方法，可以传递String、StringBuilder和StringBuffer作为参数。**
 # **String**   
 Java中，String类代表字符串。
 它是一个不可变的类，也是Java中最常用的类型之一。  
@@ -30,7 +30,7 @@ Java中，String类代表字符串。
 它们都位于同一个名为java.lang的包中。   
 但CharSequence是一个接口，String是一个具体的类。   
 CharSequence与String都能用于定义字符串。  
-但CharSequence的值是可读可写序列，而String的值是只读序列，即String类是不可变的。  
+但**CharSequence的值是可读可写序列，而String的值是只读序列**，即String类是不可变的。  
 ```java
 public class CharSequenceDemo {
     public static void main(String[] args) {
