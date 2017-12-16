@@ -51,3 +51,18 @@ public class CharSequenceDemo {
     }
 }
 ```
+执行代码，打印结果：
+```
+Type of obj: String
+Type of str: String
+Value of obj: hello
+Value of str: hello
+Is obj a String? true
+Is obj a CharSequence? true
+Is str a String? true
+Is str a CharSequence? true
+Is "hello" a String? true
+Is "hello" a CharSequence? true
+str.equals(obj)? true
+(str == obj)? true
+```
