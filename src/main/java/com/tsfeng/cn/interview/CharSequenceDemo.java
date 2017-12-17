@@ -7,7 +7,6 @@ import static org.junit.Assert.assertNotEquals;
 /**
  * @author tsfeng
  * @version 创建时间 2017/12/16 16:40
- * https://leibnizhu.gitlab.io
  */
 public class CharSequenceDemo {
 
