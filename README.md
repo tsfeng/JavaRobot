@@ -121,6 +121,7 @@
     - https://stackoverflow.com  
     - http://www.importnew.com  
     - https://www.programcreek.com  
+    - http://javarevisited.blogspot.hk/
     - https://www.journaldev.com/  
     - https://www.infoq.com  
     - http://www.baeldung.com/category/java/
