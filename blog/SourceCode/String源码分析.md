@@ -49,7 +49,7 @@ public String(byte bytes[], int offset, int length, String charsetName);
 public String(char value[]);
 public String(char value[], int offset, int count)；
 ```
-####5、和int[]相关的；   
+#### 5、和int[]相关的；   
 ```
 public String(int[] codePoints, int offset, int count)
 ```
