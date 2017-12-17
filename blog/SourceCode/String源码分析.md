@@ -110,7 +110,7 @@ public native String intern();
 ```
 该方法返回一个字符串对象的内部化引用。 众所周知：String类维护一个初始为空的字符串的对象池，当intern方法被调用时，如果对象池中已经包含这一个相等的字符串对象则返回对象池中的实例，否则添加字符串到对象池并返回该字符串的引用。
 ## **对“+”的重载**
-String对“+”的支持其实就是使用了StringBuilder以及他的append()、toString()le两个方法。
+String对“+”的支持其实就是使用了StringBuilder以及他的append()、toString()两个方法。
 ## **常规方法**
 ```
 boolean isEmpty();
