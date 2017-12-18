@@ -83,12 +83,12 @@ String valueOf(Object obj);
 String valueOf(char data[]);
 String copyValueOf(char data[]);
 ```
-调用String(char value[])构造器。
+调用String(char value[])构造方法。
 ```
 String valueOf(char data[], int offset, int count);
 String copyValueOf(char data[], int offset, int count);
 ```
-调用String(char value[], int offset, int count)构造器。
+调用String(char value[], int offset, int count)构造方法。
 ```
 String valueOf(boolean b);
 ```
@@ -96,7 +96,7 @@ String valueOf(boolean b);
 ```
 String valueOf(char c);
 ```
-调用String(char[] value, true)构造器。
+调用String(char[] value, true)构造方法。
 ```
 String valueOf(int i);
 String valueOf(long l);
