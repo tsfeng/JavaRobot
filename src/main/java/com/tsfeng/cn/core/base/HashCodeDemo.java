@@ -44,7 +44,7 @@ public class HashCodeDemo {
         int uniqueHashNum = (int) hashs.stream().distinct().count();
         int conflictNum = hashs.size() - uniqueHashNum;
         double conflictRate = (conflictNum * 1.0) / hashs.size();
-        System.out.print("hashNum = " + hashs.size() + "  ");
+        System.out.print("hashNum = " + hashs.size() + "，uniqueHashNum = " + uniqueHashNum + "，");
         System.out.println(String.format("multiplier=%4d, minHash=%11d, maxHash=%10d, conflictNum=%6d, conflictRate=%.4f%%",
                 multiplier, minHash, maxHash, conflictNum, conflictRate * 100));
     }
