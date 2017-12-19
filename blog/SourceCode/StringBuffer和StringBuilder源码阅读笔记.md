@@ -35,7 +35,8 @@ String(char[] value, boolean share) {
 }
 ```
 # **构造方法** 
-StringBuffer和StringBuilder的构造方法基本一样，都是调用父类的构造方法或append方法。下面以StringBuffer的构造方法作为参考：  
+StringBuffer和StringBuilder的构造方法基本一样，都是调用父类的构造方法或append方法。  
+下面以StringBuffer的构造方法作为参考：  
 1、构造一个不带字符的StringBuffer，其初始容量为16个字符。
 ```
 public StringBuffer() {
@@ -149,7 +150,7 @@ private int newCapacity(int minCapacity) {
 ```
 private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 ```
-至于为什么是这个值，源码注释中说明，一些JVM在数组中存储header信息，试图分配较大的数组可能导致VM OutOfMemoryError。
+至于为什么是这个值，源码注释中说明，一些JVM在数组中存储header信息，试图分配较大的数组可能导致VM OutOfMemoryError。  
 在Stack Overflow上关于这个问题的讨论：[Why the maximum array size of ArrayList is Integer.MAX_VALUE - 8?](https://stackoverflow.com/questions/35756277/why-the-maximum-array-size-of-arraylist-is-integer-max-value-8)
 
 
