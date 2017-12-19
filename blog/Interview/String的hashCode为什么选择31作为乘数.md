@@ -16,7 +16,7 @@ public int hashCode() {
 ```
 s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
 ```
-这里说明一下，上面的s数组即源码中的val数组，是String内部维护的一个char类型数组。**空字符串的hashCode默认未0。**  
+这里说明一下，上面的s数组即源码中的val数组，是String内部维护的一个char类型数组。**空字符串的hashCode默认为0。**  
 接下来看本文的重点，即选择31的理由。从网上的资料来看，一般有如下两个原因：  
 **第一，31是一个不大不小的质数，是作为 hashCode 乘子的优选质数之一。**  
 另外一些相近的质数，比如29、37、41等等，也都是不错的选择。那么为啥偏偏选中了31呢？请看第二个原因。  
@@ -28,7 +28,8 @@ s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
 
 上面说了，质数2做为乘子会导致哈希值分布在一个较小区间内，那么如果用一个较大的大质数101会产生什么样的结果呢？根据上面的分析，我想大家应该可以猜出结果了。就是不用再担心哈希值会分布在一个小的区间内了，因为101^5 = 10,510,100,501。但是要注意的是，这个计算结果太大了。如果用 int 类型表示哈希值，结果会溢出，最终导致数值信息丢失。尽管数值信息丢失并不一定会导致冲突率上升，但是我们暂且先认为质数101（或者更大的质数）也不是很好的选择。最后，我们再来看看质数31的计算结果：31^5 = 28629151，结果值相对于32和10,510,100,501来说。是不是很nice，不大不小。  
 
-上面用了比较简陋的数学手段证明了数字31是一个不大不小的质数，是作为 hashCode 乘子的优选质数之一。接下来我会用详细的实验来验证上面的结论，不过在验证前，我们先看看 Stack Overflow 上关于这个问题的讨论，Why does Java's hashCode() in String use 31 as a multiplier?。其中排名第一的答案引用了《Effective Java》中的一段话，这里也引用一下：  
+上面用了比较简陋的数学手段证明了数字31是一个不大不小的质数，是作为 hashCode 乘子的优选质数之一。接下来我会用详细的实验来验证上面的结论，不过在验证前，我们先看看 Stack Overflow 上关于这个问题的讨论，Why does Java's hashCode() in String use 31 as a multiplier?。  
+其中排名第一的答案引用了《Effective Java》中的一段话，这里也引用一下：  
 > The value 31 was chosen because it is an odd prime. If it were even and the multiplication overflowed, information would be lost, as multiplication by 2 is equivalent to shifting. The advantage of using a prime is less clear, but it is traditional. A nice property of 31 is that the multiplication can be replaced by a shift and a subtraction for better performance: 31 * i == (i << 5) - i. Modern VMs do this sort of optimization automatically.
 
 简单翻译一下：

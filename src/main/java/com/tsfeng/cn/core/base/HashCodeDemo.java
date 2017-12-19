@@ -51,6 +51,7 @@ public class HashCodeDemo {
 
 
     public static void main(String[] args) throws IOException {
+        System.out.println(Integer.MAX_VALUE);
         // Java8用流的方式读文件，更加高效
         List<String> wordList = Files.lines(Paths.get("F:\\linux.words"), StandardCharsets.UTF_8)
                 .filter(word -> !word.contains(","))
