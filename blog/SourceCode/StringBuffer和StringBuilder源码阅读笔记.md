@@ -295,7 +295,7 @@ public synchronized StringBuffer insert(int index, char[] str, int offset,int le
     - **int lastIndexOf(String str, int fromIndex)，**
 - 替换方法
     - **AbstractStringBuilder replace(int start, int end, String str)，** 
-- codePoint相关方法（）
+- codePoint相关方法（Unicode字符相关）
     - **int codePointAt(int index)，**
     - **int codePointBefore(int index)，**
     - **int codePointCount(int beginIndex, int endIndex)，**
