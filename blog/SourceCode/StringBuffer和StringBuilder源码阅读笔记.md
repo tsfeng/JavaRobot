@@ -275,6 +275,15 @@ public synchronized StringBuffer insert(int index, char[] str, int offset,int le
 - 插入的字符串为空则替换为"null"
 - 检查数组容量，不足则扩容
 - System.arraycopy()方法复制数组
+# **AbstractStringBuilder类—trimToSize方法**
+尝试减少用于字符序列的存储空间。如果缓冲区比保留当前字符序列所需的缓冲区大，则可以调整缓冲区以变得更加节省空间。调用此方法可能会影响后续调用capacity()方法返回的值，但不是必需的。
+```
+public void trimToSize() {
+    if (count < value.length) {
+        value = Arrays.copyOf(value, count);
+    }
+}
+```
 # **其他方法**
 - 常规方法
     - **int length()方法，** 获取字符串长度；
