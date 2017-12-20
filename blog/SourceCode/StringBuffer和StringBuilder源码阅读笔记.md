@@ -1,6 +1,18 @@
 # **继承结构**  
 ![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/StringBuffer_Builder_UML.png)  
 # **类定义** 
+```
+public final class StringBuffer extends AbstractStringBuilder
+    implements java.io.Serializable, CharSequence { 
+    //略      
+}
+```
+```
+public final class StringBuilder extends AbstractStringBuilder
+    implements java.io.Serializable, CharSequence {
+    //略    
+}
+```
 StringBuffer和StringBuilder类的继承结构是相同的，如下： 
 - 都被final修饰，不能再派生子类；
 - 实现了Serializable接口，可序列化；  
