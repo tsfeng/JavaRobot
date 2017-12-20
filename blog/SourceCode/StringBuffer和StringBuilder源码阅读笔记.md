@@ -68,12 +68,26 @@ public StringBuffer(String str) {
     super(str.length() + 16);
     append(str);
 }
+
+@Override
+public synchronized StringBuffer append(String str) {
+    toStringCache = null;
+    super.append(str);
+    return this;
+}
 ```
 4、构造一个StringBuffer，它包含与指定的CharSequence相同的字符。
 ```
 public StringBuffer(CharSequence seq) {
     this(seq.length() + 16);
     append(seq);
+}
+
+@Override
+public synchronized StringBuffer append(CharSequence s) {
+    toStringCache = null;
+    super.append(s);
+    return this;
 }
 ```  
 情况3、4中的初始容量是字符串的长度再加16，这意味着如果入参字符串长度为1，那么底层的数组长度为17。  
