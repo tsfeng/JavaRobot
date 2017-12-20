@@ -90,7 +90,7 @@ public synchronized StringBuffer append(CharSequence s) {
     return this;
 }
 ```  
-情况3、4中的初始容量是字符串的长度再加16，这意味着如果入参字符串长度为1，那么底层的数组长度为17。  
+情况3、4中的初始容量是字符串的长度再加16，这意味着如果入参字符串长度为1，那么底层的数组容量为17。  
 至于为什么是16，而不是其他数字，没找到相关资料，也许是当初设计Java语言的老人家们喜欢16吧。
 # **AbstractStringBuilder类—成员变量**  
 value，存放当前字符串包含的字符；与String不同，没有final修饰，因此是可变的。
