@@ -90,8 +90,14 @@ public synchronized StringBuffer append(CharSequence s) {
     return this;
 }
 ```  
-情况3、4中的初始容量是字符串的长度再加16，这意味着如果入参字符串长度为1，那么底层的数组容量为17。  
+情况3、4中的**初始容量是字符串的长度再加16**，这意味着如果入参字符串长度为1，那么底层的数组容量为17。  
 至于为什么是16，而不是其他数字，没找到相关资料，也许是当初设计Java语言的老人家们喜欢16吧。
+# **AbstractStringBuilder类—类定义**  
+```
+abstract class AbstractStringBuilder implements Appendable, CharSequence {
+    //略
+}
+```
 # **AbstractStringBuilder类—成员变量**  
 value，存放当前字符串包含的字符；与String不同，没有final修饰，因此是可变的。
 ```
@@ -109,7 +115,7 @@ StringBuffer和StringBuilder的length()方法返回这个值。
 int count;
 ```
 # **AbstractStringBuilder类—构造方法**  
-1、默认类型无参构造方法；源码注释说明，这个无参的构造方法对子类的序列化是必要的。
+1、默认类型无参构造方法；源码注释说明，这个**无参的构造方法对子类的序列化是必要的**。
 ```
 AbstractStringBuilder() {
 }
@@ -153,6 +159,34 @@ public AbstractStringBuilder append(boolean b) {
     //略
 }
 ```
+另外，对于下面两个很相似的方法(暂且叫做方法1和方法2)，不考虑第一个参数，还需要注意这两个方法之间的不同：
+- 方法1取的是从索引start(含)开始，到索引end(不含)之前的子串；方法2取的是从索引offset(含)开始，向后数长度为len的子串。
+- 方法1是重写了接口Appendable中的方法；方法2不是。
+```
+//方法1
+@Override
+public AbstractStringBuilder append(CharSequence s, int start, int end) {
+    //略
+}
+
+//方法2
+public AbstractStringBuilder append(char str[], int offset, int len) {
+     //略
+}
+```
+例如，以下代码两段代码，分别执行后最终打印结果是不同的
+```
+StringBuffer buffer = new StringBuffer("hello ");
+String str = "aworldb";
+buffer.append(str, 1, 5);
+System.out.println(buffer); //打印hello worl
+```
+```
+StringBuffer buffer = new StringBuffer("hello ");
+char[] c = {'a', 'w', 'o', 'r', 'l', 'd', 'b'};
+buffer.append(c, 1, 5);
+System.out.println(buffer); //打印hello world
+```
 # **AbstractStringBuilder类—扩容方法** 
 上面的append()方法在对底层数组操作之前，都要调用ensureCapacityInternal()方法来判断数组容量是否足够：
 ```
@@ -178,13 +212,19 @@ private int newCapacity(int minCapacity) {
 }
 ```
 看上面源代码，扩容过程为：  
-1、将容量扩充为原容量的2倍+2；  
-2、如果扩充后容量依旧不足，则直接扩充到需要的容量大小；  
-但这个扩容不能超过最大容量限制，也不能溢出后为负数。
+**1、将容量扩充为原容量的2倍+2；**  
+**2、如果扩充后容量依旧不足，则直接扩充到需要的容量大小；**    
+**但这个扩容不能超过最大容量限制，也不能溢出后为负数。**  
 ```
+/**
+ * The maximum size of array to allocate (unless necessary).
+ * Some VMs reserve some header words in an array.
+ * Attempts to allocate larger arrays may result in
+ * OutOfMemoryError: Requested array size exceeds VM limit
+ */
 private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 ```
-至于为什么是这个值，源码注释中说明，一些JVM在数组中存储header信息，试图分配较大的数组可能导致VM OutOfMemoryError。  
+至于为什么是这个值，源码注释中说明，**一些JVM在数组中存储header信息，试图分配较大的数组可能导致VM OutOfMemoryError**。  
 在Stack Overflow上关于这个问题的讨论：[Why the maximum array size of ArrayList is Integer.MAX_VALUE - 8?](https://stackoverflow.com/questions/35756277/why-the-maximum-array-size-of-arraylist-is-integer-max-value-8)
 # **AbstractStringBuilder类—setLength方法**
 StringBuffer和StringBuilder可以调用setLength()方法设置容量，不同的是StringBuffer覆盖了父类的setLength()方法，而StringBuilder是直接调用父类的setLength()方法。   

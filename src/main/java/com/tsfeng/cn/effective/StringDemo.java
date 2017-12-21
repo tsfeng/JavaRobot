@@ -53,5 +53,12 @@ public class StringDemo {
 
 //        int i = buffer.codePointAt(3);
 //        System.out.println(i);
+
+        StringBuffer buffer = new StringBuffer("hello ");
+//        String str = "aworldb";
+//        buffer.append(str, 1, 5);
+        char[] c = {'a', 'w', 'o', 'r', 'l', 'd', 'b'};
+        buffer.append(c, 1, 5);
+        System.out.println(buffer);
     }
 }

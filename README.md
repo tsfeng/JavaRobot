@@ -5,7 +5,7 @@
 ### 说明：如无特别说明，所有代码都基于JDK8  
 ---
 
-- JavaSE(Java基础)  
+- **JavaSE(Java基础)**  
     
     - Java Core
         - 关键字
@@ -53,7 +53,7 @@
         
     - 待完善
 #
-- JVM(Java虚拟机)
+- **JVM(Java虚拟机)**  
     - [JVM内存区域](https://github.com/tsfeng/JavaRobot/blob/master/blog/JVM/JVM%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F.md)
     - 类加载
     - 垃圾回收算法
@@ -72,7 +72,7 @@
     - 散列表
     
 #
-- Algorithm(算法)
+- **Algorithm(算法)**
     - 排序算法
         - 插入排序
             - [直接插入排序和二分插入排序](https://github.com/tsfeng/JavaRobot/blob/master/blog/Algorithm/SortAlgorithm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B9%8B%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F.md)
