@@ -1,14 +1,13 @@
 ### **认识final**​
 在Java中，final关键字可以用来修饰类、方法和变量（包括成员变量和局部变量）。  
 在JLS, Java SE 8 Edition, Section 4.12.4，final Variables，描述到：  
-    
-    一个变量可以被声明为final，一个final变量只能被赋值一次，如果一个final变量被赋值会导致编译时错误，除非这个final变量在被赋值之前确定是未赋值的。
+> 一个变量可以被声明为final，一个final变量只能被赋值一次，如果一个final变量被赋值会导致编译时错误，除非这个final变量在被赋值之前确定是未赋值的。
+
 在JLS, Java SE 8 Edition, Section 8.4.3.3，final Methods，描述到：  
+> 一个方法可以被声明为final以防止子类覆盖或隐藏它。试图覆盖或隐藏一个final方法会导致编译时错误。
 
-    一个方法可以被声明为final以防止子类覆盖或隐藏它。试图覆盖或隐藏一个final方法会导致编译时错误。
 在JLS, Java SE 8 Edition, Section 8.1.1.2，final Classes，描述到：  
-
-    一个类可以被声明为final如果它的定义是完整的并且不需要任何子类。如果某个final类的名称出现在另一个类声明的 extends子句中，则会导致编译时错误；这意味着一个final类不能有任何子类。如果一个类同时被声明为final和abstract，则会导致编译时错误；因为这个类的实现不可能完成。
+> 一个类可以被声明为final如果它的定义是完整的并且不需要任何子类。如果某个final类的名称出现在另一个类声明的 extends子句中，则会导致编译时错误；这意味着一个final类不能有任何子类。如果一个类同时被声明为final和abstract，则会导致编译时错误；因为这个类的实现不可能完成。
 ### **怎么理解**​  
 先看一段代码，类FinalDemo定义了一个构造方法和一个“setList”方法；  
 ```java

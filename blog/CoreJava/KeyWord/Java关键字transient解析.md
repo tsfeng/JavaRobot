@@ -1,8 +1,8 @@
 ### **认识transient**​
 Java中的关键字transient用来表示一个字段不应该被序列化。  
 在Java Language Specification, Java SE 7 Edition, Section 8.3.1.3，描述到：  
+> Variables may be marked transient to indicate that they are not part of the persistent state of an object.
 
-    Variables may be marked transient to indicate that they are not part of the persistent state of an object.
 翻译过来也就是：变量可能被标记transient为表示它们不是对象持久状态的一部分。  
 ### **怎么理解**​   
 在理解transient关键字之前，必须理解序列化的概念。    
