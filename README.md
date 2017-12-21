@@ -1,5 +1,5 @@
 # **学习笔记** 
-所有文章均为本人【tsfeng】原创，并同步到微信公众号【JavaRobot】，关注微信公众号，及时得到文章推送，谢谢支持。  
+所有文章均同步发布到微信公众号【JavaRobot】，关注微信公众号，及时得到文章推送，谢谢支持。  
 ![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/8cm.jpg)
 
 ### 说明：如无特别说明，所有代码都基于JDK8  
