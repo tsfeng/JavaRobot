@@ -290,8 +290,9 @@ public void trimToSize() {
     - **int capacity()方法，** 获取数组value的容量；
     - **char charAt(int index)方法，** 查找指定索引处的值；
     - **void setCharAt(int index, char ch)，** 设置指定索引处的值；
+    - **void getChars(int srcBegin, int srcEnd, char dst[], int dstBegin)，** 从当前StringBuffer对象的索引号srcBegin开始，到srcEnd结束的子串，赋值到字符数组dst中，并且从dst的索引号dstBegin开始；
 - 截取方法
-    - **CharSequence subSequence(int start, int end)，**
+    - **CharSequence subSequence(int start, int end)，** 返回一个新的字符序列，该字符序列是此序列的子序列
     - **String substring(int start) ，** 指定起始索引截取字符串；
     - **String substring(int start, int end) ，** 指定起始和终止索引截取字符串；
 - 删除方法
