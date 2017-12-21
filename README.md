@@ -1,4 +1,6 @@
-# **记录学习过程，逐渐完善**  
+# **学习笔记** 
+所有文章均为本人【tsfeng】原创，并同步到微信公众号【JavaRobot】，关注微信公众号，及时得到文章推送，谢谢支持。  
+![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/8cm.jpg)
 
 ### 说明：如无特别说明，所有代码都基于JDK8  
 ---
@@ -17,6 +19,7 @@
         - [String的hashCode为什么选择31作为乘数](https://github.com/tsfeng/JavaRobot/blob/master/blog/Interview/String%E7%9A%84hashCode%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A931%E4%BD%9C%E4%B8%BA%E4%B9%98%E6%95%B0.md)
     - Java Arrays
     - Java Collections
+    - Java 泛型
     - Java 8 Features
         - [Java8新特性系列(一)](https://github.com/tsfeng/JavaRobot/blob/master/blog/CoreJava/Java8Feature/Java8%E6%96%B0%E7%89%B9%E6%80%A7%E7%B3%BB%E5%88%97(%E4%B8%80).md)
         - [Java8新特性系列(二)](https://github.com/tsfeng/JavaRobot/blob/master/blog/CoreJava/Java8Feature/Java8%E6%96%B0%E7%89%B9%E6%80%A7%E7%B3%BB%E5%88%97(%E4%BA%8C).md)
@@ -128,5 +131,5 @@
     - https://www.infoq.com  
     - http://www.baeldung.com/category/java/
     
-- 欢迎关注我的微信公众号JavaRobot    
+- 再次邀请您关注我的微信公众号JavaRobot    
     ![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/8cm.jpg)
