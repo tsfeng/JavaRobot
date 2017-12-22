@@ -1,7 +1,7 @@
 在上一篇[Java8新特性系列（五）](https://github.com/tsfeng/JavaRobot/blob/master/blog/CoreJava/Java8Feature/Java8%E6%96%B0%E7%89%B9%E6%80%A7%E7%B3%BB%E5%88%97(%E4%BA%94).md)中，我们介绍了Java8新特性之流(Stream)。    
 本篇将介绍Java8新特性之**Date-Time API**。  
 为了方便描述，本文暂且把Java8之前的日期时间API称为旧版API；相对的，把Java8的日期时间API称为新版API。
-# **了解GMT、UTC和CST**
+# **了解一些概念**
 GMT代表格林尼治标准时间：
 > 格林尼治标准时间（英语：Greenwich Mean Time，GMT）是指位于英国伦敦郊区的皇家格林尼治天文台当地的标准时间，因为本初子午线被定义为通过那里的经线。
 自1924年2月5日开始，格林尼治天文台负责每隔一小时向全世界发放调时信息。
@@ -15,46 +15,43 @@ CST通常指中国标准时间（China Standard Time）：
 > 北京时间，又名中国标准时间，是中国大陆的标准时间，比世界协调时快八小时（即UTC+8），与香港、澳门、台北、吉隆坡、新加坡等地的标准时间相同。
 北京时间并不是北京市的地方平太阳时间（东经116.4°），而是东经120°的地方平太阳时间，二者相差约14.5分钟[1]。北京时间由位于中国版图几何中心位置陕西临潼的中国科学院国家授时中心的9台铯原子钟和2台氢原子钟组通过精密比对和计算实现报时，并通过人造卫星与世界各国授时部门进行实时比对。-维基百科
 
+Unix时间戳
+> Unix时间戳是从协调世界时1970年1月1日0时0分0秒起至现在的总秒数，不考虑闰秒。
+Unix时间戳的0按照ISO 8601规范为：1970-01-01T00:00:00Z。
+
 # **旧版API的弊端**
 **1、非线程安全**   
 - 旧版API中，最常用的类莫过于java.util.Date、Calendar和SimpleDateFormat这几个类，而这几个类都是可变的，不是线程安全的。
 
 **2、设计糟糕**    
 - 旧版API中，Java的日期/时间类的定义并不一致，在java.util和java.sql的包中都有日期类，此外用于格式化和解析的类在java.text包中定义。java.util.Date同时包含日期和时间，而java.sql.Date仅包含日期，将其纳入java.sql包并不合理。另外这两个类都有相同的名字，这本身就是一个非常糟糕的设计。  
-- 旧版API中，java.util.Date是“万能的”，包含日期、时间，还有毫秒数；如果你只想用java.util.Date存储日期，或者只存储时间，  
+- 旧版API中，java.util.Date是“万能的”，包含日期、时间，还有毫秒数；如果你只想用java.util.Date存储日期，或者只存储时间，则需要自己处理。
 - 旧版API中，java.util.Date月份从0开始，一月是0，十二月是11；这不太直观。
   
 **3、时区处理麻烦**
 - 旧版API中，Date类不提供国际化，没有时区支持，你必须编写额外的逻辑处理时区。
-
-    API设计和易用性: 由于Date和Calendar的设计不当你无法完成日常的日期操作
-java.util.Date是一个“万能接口”，它包含日期、时间，还有毫秒数，如果你只想用java.util.Date存储日期，或者只存储时间，那么，只有你知道哪些部分的数据是有用的，哪些部分的数据是不能用的。
-
-旧版API还有其他一些问题，但以上问题清晰地表明Java中需要一个更健壮的Date Time API。
 # **新版API的优点**  
-java.time.LocalDate月份和星期都改成了enum，就不可能再用错了。
-Java 8 Date Time API是JSR-310的实现。它旨在克服遗留日期时间实现中的所有缺陷。新的Date Time API的一些设计原则是：  
 **1、不可变性：** 
-新Date Time API中的所有类都是不可变的，并且适用于多线程环境。  
-**2、分离问题：** 
-新的API将人类可读的日期时间和机器时间（Unix时间戳）分开。它为Date，Time，DateTime，Timestamp，Timezone等定义了单独的类。  
+新版API通过确保所有的核心类是不可变的并且代表定义良好的值来避免线程非安全性。
+**2、领域驱动的设计：** 
+新的API非常精确地使用代表Date和Time的不同用例的类来精确地模拟它的域。
 **3、清晰度：** 
 方法明确定义，并在所有的类中执行相同的操作。例如，要获取当前的实例，我们有now()方法。在所有这些类中定义了format（）和parse（）方法，而不是为它们分别设置一个类。  
 所有的类使用工厂模式和战略模式更好地处理。一旦你使用了其中一个类的方法，与其他类一起工作并不困难。  
 **4、实用操作：**
 所有新的Date Time API类都带有执行常见任务的方法，例如加号，减号，格式，解析，获取日期/时间等的单独部分。  
 **5、可扩展：**
-新的日期时间API适用于ISO-8601日历系统，但我们也可以将其与其他非ISO日历一起使用。  
+新版API允许人们使用不同的日历系统，以支持世界上不同地区的用户需求；这些用户不一定遵循ISO-8601标准。这样做并没有给大多数开发者带来额外的负担，他们只需要使用标准年表。 
 # **新版API常用类**  
 - **java.time.LocalDate；** 只包含日期
 - **java.time.LocalTime；** 只包含时间
 - **java.time.LocalDateTime；** 包含日期和时间
 - **java.time.DateTimeFormatter；** 日期、时间格式化
 - **java.time.ZonedDateTime；** 包含日期、时间和时区
-- **java.time.Instant；** 机器的日期和时间，从Unix纪元时间（1970年1月1日午夜UTC）
+- **java.time.Instant；** Unix时间戳
 - **java.time.Duration；**  以秒和纳秒为单位测量时间。
 - **java.time.Period；**  测量年，月，日的时间。
-- **java.time.TemporalAdjuster；** 调整日期。
+- **java.time.TemporalAdjuster；** 日期计算。
 
 如以下示例代码：
 ```java
