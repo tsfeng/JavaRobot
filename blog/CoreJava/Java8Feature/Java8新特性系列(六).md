@@ -1,5 +1,5 @@
 在上一篇[Java8新特性系列（五）](https://github.com/tsfeng/JavaRobot/blob/master/blog/CoreJava/Java8Feature/Java8%E6%96%B0%E7%89%B9%E6%80%A7%E7%B3%BB%E5%88%97(%E4%BA%94).md)中，我们介绍了Java8新特性之流(Stream)。    
-本篇将介绍Java8新特性之**Date-Time API**。
+本篇将介绍Java8新特性之**Date-Time API**。  
 为了方便描述，本文暂且把Java8之前的日期时间API称为旧版API；相对的，把Java8的日期时间API称为新版API。
 # **了解GMT、UTC和CST**
 GMT代表格林尼治标准时间：
