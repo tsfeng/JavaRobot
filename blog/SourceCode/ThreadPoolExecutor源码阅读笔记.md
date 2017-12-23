@@ -71,7 +71,19 @@ private static final RejectedExecutionHandler defaultHandler = new AbortPolicy()
 ```
 private volatile boolean allowCoreThreadTimeOut;
 ```
-默认值为false，如果为false，core线程在空闲时依然存活；如果为true，则core线程等待工作，直到时间超时至keepAliveTime；
+该属性用来控制是否允许核心线程超时退出，默认值为false。如果为false，core线程在空闲时依然存活；如果为true，则core线程等待工作，直到时间超时至keepAliveTime。
+```
+private final HashSet<Worker> workers = new HashSet<Worker>();
+```
+workers是包含线程池中所有工作线程worker的集合，仅仅当拥有mainLock锁时才能访问它。
+```
+private int largestPoolSize;
+```
+该变量记录了线程池在整个生命周期中曾经出现的最大线程个数。为什么说是曾经呢？因为线程池创建之后，可以调用setMaximumPoolSize()改变运行的最大线程的数目。仅仅当拥有mainLock锁时才能访问它。
+```
+private long completedTaskCount;
+```
+该变量记录已完成的任务数量。只有在worker线程终止时才更新。仅仅当拥有mainLock锁时才能访问它。
 # **嵌套类**
 ![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/ThreadPoolExecutor_InnerClass.png)
 ```
@@ -223,7 +235,7 @@ private boolean addWorker(Runnable firstTask, boolean core) {
         for (;;) {
             int wc = workerCountOf(c);
             //CAPACITY为(1<<29)-1，这是线程池中线程数真正的上界，绝不允许超过。
-            //否则根据参数中是否以corePoolSize为上界进行判断，如果超过，则新增worker失败。
+            //否则根据参数中是否以corePoolSize或maximumPoolSize为上界进行判断，如果超过，则新增worker失败。
             if (wc >= CAPACITY ||
                 wc >= (core ? corePoolSize : maximumPoolSize))
                 return false;
@@ -238,11 +250,12 @@ private boolean addWorker(Runnable firstTask, boolean core) {
             // else CAS failed due to workerCount change; retry inner loop
         }
     }
-
+    //运行到此处时，线程池运行的线程数已经成功+1
     boolean workerStarted = false;
     boolean workerAdded = false;
     Worker w = null;
     try {
+        // 初始化worker
         w = new Worker(firstTask);
         final Thread t = w.thread;
         if (t != null) {
@@ -252,10 +265,12 @@ private boolean addWorker(Runnable firstTask, boolean core) {
                 // Recheck while holding lock.
                 // Back out on ThreadFactory failure or if
                 // shut down before lock acquired.
+                // 由于获取锁之前线程池状态可能发生了变化，这里需要重新读一次状态。
                 int rs = runStateOf(ctl.get());
-
+                // 当线程池是RUNNING运行状态或者线程池是SHUTDOWN状态，任务是null，往下执行
                 if (rs < SHUTDOWN ||
                     (rs == SHUTDOWN && firstTask == null)) {
+                    // 线程必须保证是没有start的，这里做参数校验
                     if (t.isAlive()) // precheck that t is startable
                         throw new IllegalThreadStateException();
                     workers.add(w);
@@ -267,12 +282,14 @@ private boolean addWorker(Runnable firstTask, boolean core) {
             } finally {
                 mainLock.unlock();
             }
+            // 成功增加worker后，启动该worker线程。
             if (workerAdded) {
                 t.start();
                 workerStarted = true;
             }
         }
     } finally {
+        // worker线程如果没有成功启动，回滚worker集合和worker计数器的变化。
         if (! workerStarted)
             addWorkerFailed(w);
     }
@@ -281,11 +298,14 @@ private boolean addWorker(Runnable firstTask, boolean core) {
 ```
 源码注释说明：
 - 检查根据当前线程池的状态是否允许添加一个新的Worker，如果可以，调整worker count
+- 启动worker对应的线程，并启动该线程，运行worker的run方法。
+- 启动失败，回滚worker的创建动作，即将worker从workers集合中删除，并原子性的减少workerCount。
 # **其他方法** 
 ```
 public void shutdown()
 ```
 继续运行之前提交到阻塞队列中的任务，不再接受新任务。
+首先会检查是否具有shutdown的权限，然后设置线程池的控制状态为SHUTDOWN，之后中断空闲的worker，最后尝试终止线程池。
 ```
 public List<Runnable> shutdownNow()
 ```
