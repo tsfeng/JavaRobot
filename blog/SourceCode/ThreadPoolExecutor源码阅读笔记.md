@@ -32,31 +32,25 @@ private static final int TERMINATED =  3 << COUNT_BITS;
 - **RUNNING**
     - 线程池的初始状态
     - 接受新任务，并处理队列任务
-    - -1（32个1）左移29位，即高3位为111，低29位全部为0，负数
+    - -1（32个1）左移29位，即高3位为111，低29位全部为0
 - **SHUTDOWN**
     - RUNNING状态下调用shutdown方法后进入此状态
     - 不接受新任务，但会处理队列任务
-    - 0（32个0）左移29位，，即高3位为000，低29位全部为0，正数
+    - 0（32个0）左移29位，，即高3位为000，低29位全部为0
 - **STOP** 
     - RUNNING/SHUTDOWN状态下调用shutdownNow方法后进入此状态
     - 不接受新任务，不会处理队列任务，而且会中断正在处理过程中的任务
-    - 1（31个0和1个1）左移29位，即高3位为001，低29位全部为0，正数
+    - 1（31个0和1个1）左移29位，即高3位为001，低29位全部为0
 - **TIDYING**
     - SHUTDOWN/STOP状态会过渡到此状态
     - 所有的任务已结束，工作线程数为0，将会执行terminated()方法
-    - 2（30个0和10）左移29位，即高3位为010，低29位全部为0，正数
+    - 2（30个0和10）左移29位，即高3位为010，低29位全部为0
 - **TERMINATED**
     - TIDYING状态下，线程池执行完terminated()方法后进入此状态
     - 线程池已完全终止
-    - 3（30个0和11）左移29位，即高3位为011，低29位全部为0，正数
+    - 3（30个0和11）左移29位，即高3位为011，低29位全部为0
     
 **由于有5种状态，最少需要3位表示，所以采用的AtomicInteger的高3位来表示。**  
-**只有RUNNING状态下，ThreadPoolExecutor的ctl为负数，所以有了以下通过比较大小来判断运行状态的方法。**
-```
-private static boolean isRunning(int c) {
-    return c < SHUTDOWN;
-}
-```
 ```
 private final BlockingQueue<Runnable> workQueue;
 private volatile ThreadFactory threadFactory;
