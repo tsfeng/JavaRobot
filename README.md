@@ -52,6 +52,9 @@
         - TreeSet
         - HashSet
         
+    - Concurrent源码系列
+        - ThreadPoolExecutor源码阅读笔记
+        
     - 待完善
 #
 - **JVM(Java虚拟机)**  
@@ -60,7 +63,19 @@
     - 垃圾回收算法
 #
 - JavaConcurrent(Java并发)
-    - 
+    - Executor和ThreadPoolExecutor
+    - 阻塞队列BlockingQueue
+    - 原子变量Atomic
+    - 锁
+    - 同步工具
+        - CountDownLatch
+        - Semaphore
+        - CyclicBarrier
+        - Phaser
+        - Exchange
+    - 并发集合
+        - ConcurrentHashMap
+        - CopyOnWriteArrayList
 
 #
 - DataStructure(数据结构)
