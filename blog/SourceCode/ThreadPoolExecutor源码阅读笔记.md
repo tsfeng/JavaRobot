@@ -51,6 +51,8 @@ private static final int TERMINATED =  3 << COUNT_BITS;
     - 3（30个0和11）左移29位，即高3位为011，低29位全部为0
     
 **由于有5种状态，最少需要3位表示，所以采用的AtomicInteger的高3位来表示。**  
+ThreadPoolExecutor线程池状态变化如下图所示：
+![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/ThreadPoolExecutor_State.jpg)  
 ```
 private final BlockingQueue<Runnable> workQueue;
 private volatile ThreadFactory threadFactory;
