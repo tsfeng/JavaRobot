@@ -209,6 +209,9 @@ public void execute(Runnable command) {
 - 如果运行的线程数量小于corePoolSize，则尝试使用用户定义的Runnalbe对象创建一个新的线程。调用addWorker方法会原子性的检查runState和workCount，通过返回false来防止在不应该添加线程时添加了线程。
 - 如果一个任务能够成功进入队列，我们仍需要双重检查是否应该增加一个线程。因为在上一次检查之后该线程死亡了；或者当进入到此方法时，线程池已经shutdown了，所以需要再次检查状态。如有必要，当停止时还需要回滚入队列操作，或者当线程池没有线程时需要创建一个新线程。
 - 如果无法进入队列，那么尝试增加一个新线程。如果此操作失败，那么就意味着线程池已经shut down或者已经饱和了，所以拒绝任务。
+
+线程池的大致处理流程如下图所示：
+![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/ThreadPoolExecutor_Flow.png)
 # **addWorker方法** 
 ```
 private boolean addWorker(Runnable firstTask, boolean core) {
