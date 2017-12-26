@@ -159,7 +159,7 @@ private final class Worker
     }
 }
 ```
-之所以Worker自己实现Runnable，并创建Thread，在firstTask外包一层，是因为要通过Worker控制中断，而firstTask这个工作任务只是负责执行业务。
+之所以Worker自己实现Runnable，并创建Thread，在firstTask外包一层，是因为要通过Worker控制中断，而firstTask这个工作任务只是负责执行业务。  
 **Worker控制中断主要有以下几方面：**
 - 初始AQS状态为-1，此时不允许中断interrupt()，只有在worker线程启动了，执行了runWoker()，将state置为0，才能中断；
 - 为了防止某种情况下，在运行中的worker被中断，runWorker()每次运行任务时都会lock()上锁，而shutdown()这类可能会终止worker的操作需要先获取worker的锁，这样就防止了中断正在运行的线程
@@ -171,6 +171,7 @@ private final class Worker
 - setCorePoolSize()时可能会interruptIdleWorkers()，在对一个线程interrupt时会要w.tryLock()；
 - 如果可重入，就可能会在对线程池操作的方法中中断线程；
 - 类似其他方法setMaximumPoolSize()、setKeppAliveTime()、allowCoreThreadTimeOut等。
+
 ```
 ThreadPoolExecutor.AbortPolicy 
 ```
