@@ -85,7 +85,92 @@ private long completedTaskCount;
 ```
 ThreadPoolExecutor.Worker 
 ```
-Worker类是ThreadPoolExecutor的一个非常重要的内部类，它是对工作线程的封装，Worker继承了AQS抽象类并且实现了Runnable接口。
+Worker类是ThreadPoolExecutor的一个非常重要的内部类，它是对工作线程的封装，Worker继承了AQS抽象类并且实现了Runnable接口。所以其既是一个可执行的任务，又可以达到锁的效果。
+```
+private final class Worker
+    extends AbstractQueuedSynchronizer
+    implements Runnable
+{
+    /**
+     * This class will never be serialized, but we provide a
+     * serialVersionUID to suppress a javac warning.
+     */
+    private static final long serialVersionUID = 6138294804551838833L;
+
+    /** Thread this worker is running in.  Null if factory fails. */
+    final Thread thread;
+    /** Initial task to run.  Possibly null. */
+    Runnable firstTask;
+    /** Per-thread task counter */
+    volatile long completedTasks;
+
+    /**
+     * Creates with given first task and thread from ThreadFactory.
+     * @param firstTask the first task (null if none)
+     */
+    Worker(Runnable firstTask) {
+        //在调用runWorker()前，禁止interrupt中断
+        setState(-1); // inhibit interrupts until runWorker
+        this.firstTask = firstTask;
+        this.thread = getThreadFactory().newThread(this);
+    }
+
+    /** Delegates main run loop to outer runWorker  */
+    public void run() {
+        runWorker(this);
+    }
+
+    // Lock methods
+    //
+    // The value 0 represents the unlocked state.
+    // The value 1 represents the locked state.
+
+    protected boolean isHeldExclusively() {
+        return getState() != 0;
+    }
+
+    protected boolean tryAcquire(int unused) {
+        if (compareAndSetState(0, 1)) {
+            setExclusiveOwnerThread(Thread.currentThread());
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean tryRelease(int unused) {
+        setExclusiveOwnerThread(null);
+        setState(0);
+        return true;
+    }
+
+    public void lock()        { acquire(1); }
+    public boolean tryLock()  { return tryAcquire(1); }
+    public void unlock()      { release(1); }
+    public boolean isLocked() { return isHeldExclusively(); }
+
+    void interruptIfStarted() {
+        Thread t;
+        if (getState() >= 0 && (t = thread) != null && !t.isInterrupted()) {
+            try {
+                t.interrupt();
+            } catch (SecurityException ignore) {
+            }
+        }
+    }
+}
+```
+之所以Worker自己实现Runnable，并创建Thread，在firstTask外包一层，是因为要通过Worker控制中断，而firstTask这个工作任务只是负责执行业务。
+**Worker控制中断主要有以下几方面：**
+- 初始AQS状态为-1，此时不允许中断interrupt()，只有在worker线程启动了，执行了runWoker()，将state置为0，才能中断；
+- 为了防止某种情况下，在运行中的worker被中断，runWorker()每次运行任务时都会lock()上锁，而shutdown()这类可能会终止worker的操作需要先获取worker的锁，这样就防止了中断正在运行的线程
+    - shutdown()线程池时，会对每个worker尝试tryLock()上锁，而Worker类这个AQS的tryAcquire()方法是固定将state从0->1，故初始状态state==-1时tryLock()失败，不能interrupt()；
+    - shutdownNow()线程池时，不用tryLock()上锁，但调用worker.interruptIfStarted()终止worker，interruptIfStarted()也有state>=0才能interrupt的逻辑。
+
+**Worker实现了一个简单的不可重入的互斥锁，而不是用ReentrantLock可重入锁**
+- 因为我们不想让在调用比如setCorePoolSize()这种线程池控制方法时可以再次获取锁(重入)；
+- setCorePoolSize()时可能会interruptIdleWorkers()，在对一个线程interrupt时会要w.tryLock()；
+- 如果可重入，就可能会在对线程池操作的方法中中断线程；
+- 类似其他方法setMaximumPoolSize()、setKeppAliveTime()、allowCoreThreadTimeOut等。
 ```
 ThreadPoolExecutor.AbortPolicy 
 ```
@@ -196,10 +281,13 @@ public void execute(Runnable command) {
             return;
         c = ctl.get();
     }
+    //线程池是Running运行状态，并且可以把当前任务加入到队列
     if (isRunning(c) && workQueue.offer(command)) {
         int recheck = ctl.get();
+         //线程池不是Running运行状态，并且可以从队列移除
         if (! isRunning(recheck) && remove(command))
             reject(command);
+        //线程池没有可用线程，创建一个新线程
         else if (workerCountOf(recheck) == 0)
             addWorker(null, false);
     }
@@ -254,7 +342,7 @@ private boolean addWorker(Runnable firstTask, boolean core) {
     boolean workerAdded = false;
     Worker w = null;
     try {
-        // 初始化worker
+        // 初始化worker-用当前firstTask创建一个Worker对象
         w = new Worker(firstTask);
         final Thread t = w.thread;
         if (t != null) {
@@ -295,10 +383,117 @@ private boolean addWorker(Runnable firstTask, boolean core) {
     return workerStarted;
 }
 ```
-源码注释说明：
-- 检查根据当前线程池的状态是否允许添加一个新的Worker，如果可以，调整worker count
-- 启动worker对应的线程，并启动该线程，运行worker的run方法。
-- 启动失败，回滚worker的创建动作，即将worker从workers集合中删除，并原子性的减少workerCount。
+执行流程说明：
+- 检查当前线程池的状态是否允许添加一个新的Worker，不可以则直接返回false；如果可以，执行下一步；
+    - 线程池状态>shutdown，可能为stop、tidying、terminated，不能添加worker线程；
+    - 线程池状态==shutdown，firstTask不为空，不能添加worker线程，因为shutdown状态的线程池不接收新任务；
+    - 线程池状态==shutdown，firstTask==null，workQueue为空，不能添加worker线程，因为firstTask为空是为了添加一个没有任务的线程再从workQueue获取task，而workQueue为空，说明添加无任务线程已经没有意义；
+- 检查线程池当前线程数量是否超过上限，超过则返回false；没超过则对workerCount+1，继续下一步；
+- 在线程池的ReentrantLock保证下，向Workers Set中添加新创建的worker实例，添加完成后解锁，并启动worker线程。如果这一切都成功了，return true；如果添加worker入Set失败或启动失败，调用addWorkerFailed()方法。
+# **runWorker方法**
+```
+final void runWorker(Worker w) {
+    Thread wt = Thread.currentThread();
+    Runnable task = w.firstTask;
+    w.firstTask = null;
+    // new Worker()时state为-1，此处是调用Worker类的tryRelease()方法，将state置为0， 而interruptIfStarted()中只有state>=0才允许调用中断
+    w.unlock(); // allow interrupts
+    boolean completedAbruptly = true;
+    try {
+        while (task != null || (task = getTask()) != null) {
+            //加锁，为了在shutdown()时不终止正在运行的worker
+            w.lock();
+            // If pool is stopping, ensure thread is interrupted;
+            // if not, ensure thread is not interrupted.  This
+            // requires a recheck in second case to deal with
+            // shutdownNow race while clearing interrupt
+            if ((runStateAtLeast(ctl.get(), STOP) ||
+                 (Thread.interrupted() &&
+                  runStateAtLeast(ctl.get(), STOP))) &&
+                !wt.isInterrupted())
+                wt.interrupt();
+            try {
+                beforeExecute(wt, task);
+                Throwable thrown = null;
+                try {
+                    task.run();
+                } catch (RuntimeException x) {
+                    thrown = x; throw x;
+                } catch (Error x) {
+                    thrown = x; throw x;
+                } catch (Throwable x) {
+                    thrown = x; throw new Error(x);
+                } finally {
+                    afterExecute(task, thrown);
+                }
+            } finally {
+                task = null;
+                w.completedTasks++;
+                w.unlock();
+            }
+        }
+        completedAbruptly = false;
+    } finally {
+        processWorkerExit(w, completedAbruptly);
+    }
+}
+``` 
+执行流程说明：
+- Worker线程启动后，通过Worker类的run()方法调用runWorker(this)；
+- 执行任务之前，首先worker.unlock()，将AQS的state置为0，允许中断当前worker线程；
+- 执行当前task或者通过getTask()从阻塞队列中获取任务；
+- 获取到任务后，w.lock()加锁，执行beforeExecute()、task.run()、afterExecute()方法，加锁是为了防止在任务运行时被线程池一些中断操作中断；在执行完任务后会解锁，已完成任务数量加1；
+- 执行过程中一旦出现异常，都会导致worker线程终止，进入processWorkerExit()处理worker退出的流程；
+- 正常执行完当前task后，会通过getTask()从阻塞队列中获取新任务，继续循环；
+- 没有新任务时，也进入processWorkerExit()处理worker退出的流程。
+# **getTask方法** 
+```
+private Runnable getTask() {
+    boolean timedOut = false; // Did the last poll() time out?
+
+    for (;;) {
+        int c = ctl.get();
+        int rs = runStateOf(c);
+
+        // Check if queue empty only if necessary.
+        if (rs >= SHUTDOWN && (rs >= STOP || workQueue.isEmpty())) {
+            decrementWorkerCount();
+            return null;
+        }
+
+        int wc = workerCountOf(c);
+
+        // Are workers subject to culling?
+        boolean timed = allowCoreThreadTimeOut || wc > corePoolSize;
+
+        if ((wc > maximumPoolSize || (timed && timedOut))
+            && (wc > 1 || workQueue.isEmpty())) {
+            if (compareAndDecrementWorkerCount(c))
+                return null;
+            continue;
+        }
+
+        try {
+            Runnable r = timed ?
+                workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS) :
+                workQueue.take();
+            if (r != null)
+                return r;
+            timedOut = true;
+        } catch (InterruptedException retry) {
+            timedOut = false;
+        }
+    }
+}
+```
+执行流程说明：
+- 首先判断线程池状态是否可以满足从workQueue中获取任务的条件，不满足return null
+    - 线程池状态为shutdown，且workQueue为空，没有新任务，故return null；
+    - 线程池状态为stop（shutdownNow()会导致变成STOP），此时不接受新任务，中断正在执行的任务，故return null；
+- 如果满足获取任务条件，根据是否需要定时获取调用不同方法：
+    - workQueue.poll()：如果在keepAliveTime时间内，阻塞队列还是没有任务，返回null；
+    - workQueue.take()：如果阻塞队列为空，当前线程会被挂起等待；当队列中有任务加入时，线程被唤醒，take方法返回任务；
+- 在阻塞从workQueue中获取任务时，可以被interrupt()中断，代码中捕获了InterruptedException，重置timedOut为初始值false，再次循环，从头开始判断。
 # **其他方法** 
 ```
 public void shutdown() {

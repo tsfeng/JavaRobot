@@ -11,18 +11,26 @@ import java.util.concurrent.TimeUnit;
 public class ThreadPoolDemo {
 
     public static void main(String[] args) {
-        ExecutorService pool = Executors.newSingleThreadExecutor();
-        for (int i = 0; i < 5; i++) {
-            pool.execute(new TaskInPool(i));
-        }
-        pool.shutdown();
+//        ExecutorService pool = Executors.newSingleThreadExecutor();
+//        for (int i = 0; i < 5; i++) {
+//            pool.execute(new TaskInPool(i));
+//        }
+//        pool.shutdown();
 
         if (!true && false){
             System.out.println(1);
         }
 
-        if(! false && true){
+        if(! false && false){
             System.out.println(2);
+        }
+
+        if(! (true && false)){
+            System.out.println(3);
+        }
+
+        if(! false && true){
+            System.out.println(4);
         }
     }
 }
