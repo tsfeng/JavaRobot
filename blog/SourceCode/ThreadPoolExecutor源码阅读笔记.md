@@ -296,28 +296,77 @@ private boolean addWorker(Runnable firstTask, boolean core) {
 - 启动失败，回滚worker的创建动作，即将worker从workers集合中删除，并原子性的减少workerCount。
 # **其他方法** 
 ```
-public void shutdown()
+public void shutdown() {
+    final ReentrantLock mainLock = this.mainLock;
+    mainLock.lock();
+    try {
+        checkShutdownAccess();
+        advanceRunState(SHUTDOWN);
+        interruptIdleWorkers();
+        onShutdown(); // hook for ScheduledThreadPoolExecutor
+    } finally {
+        mainLock.unlock();
+    }
+    tryTerminate();
+}
 ```
 继续运行之前提交到阻塞队列中的任务，不再接受新任务。
 首先会检查是否具有shutdown的权限，然后设置线程池的控制状态为SHUTDOWN，之后中断空闲的worker，最后尝试终止线程池。
 ```
-public List<Runnable> shutdownNow()
+public List<Runnable> shutdownNow() {
+    List<Runnable> tasks;
+    final ReentrantLock mainLock = this.mainLock;
+    mainLock.lock();
+    try {
+        checkShutdownAccess();
+        advanceRunState(STOP);
+        interruptWorkers();
+        tasks = drainQueue();
+    } finally {
+        mainLock.unlock();
+    }
+    tryTerminate();
+    return tasks;
+}
 ```
 尝试停止所有正在执行的任务，停止等待任务的处理，并返回正在等待执行的任务的列表。
 ```
-public boolean isShutdown()
+public boolean isShutdown() {
+    return ! isRunning(ctl.get());
+}
 ```
 如果executor已shut down，则返回true。
 ```
-public boolean isTerminating()
+public boolean isTerminating() {
+    int c = ctl.get();
+    return ! isRunning(c) && runStateLessThan(c, TERMINATED);
+}
 ```
 如果此执行程序正处于shutdown()，shutdownNow()终止之后但尚未完全终止，则返回true。
 ```
-public boolean isTerminated()
+public boolean isTerminated() {
+    return runStateAtLeast(ctl.get(), TERMINATED);
+}
 ```
 如果在shutdown后所有任务已完成，则返回true。请注意，除非是shutdown或shutdownNow先被调用，否则isTerminated永远不会是true。
 ```
 public boolean awaitTermination(long timeout, TimeUnit unit)
+    throws InterruptedException {
+    long nanos = unit.toNanos(timeout);
+    final ReentrantLock mainLock = this.mainLock;
+    mainLock.lock();
+    try {
+        for (;;) {
+            if (runStateAtLeast(ctl.get(), TERMINATED))
+                return true;
+            if (nanos <= 0)
+                return false;
+            nanos = termination.awaitNanos(nanos);
+        }
+    } finally {
+        mainLock.unlock();
+    }
+}
 ```
 阻塞，直到所有任务在关闭请求之后完成执行，或发生超时，或当前线程中断，以先发生者为准。
 
