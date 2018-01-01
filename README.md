@@ -66,7 +66,11 @@
     - 类加载
     - 垃圾回收算法
 #
-- JavaConcurrent(Java并发)
+- JavaConcurrent(Java并发系列)
+    - 【Java并发系列】实现多线程常见的三种方法
+    - 【Java并发系列】线程状态
+    - 【Java并发系列】线程中断
+    - 【Java并发系列】线程阻塞
     - Executor和ThreadPoolExecutor
     - 阻塞队列BlockingQueue
     - 原子变量Atomic
