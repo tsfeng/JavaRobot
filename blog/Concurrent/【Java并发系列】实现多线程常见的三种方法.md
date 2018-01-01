@@ -2,7 +2,7 @@ Java中实现多线程常见的有三种方法：
 - 继承Thread类
 - 实现Runnable接口
 - 通过Callable和Future
-# **继承Thread类** 
+### **继承Thread类** 
 （1）定义Thread类的子类，并重写该类的run方法，该run方法的方法体就代表了线程要完成的任务。因此把run()方法称为执行体。  
 （2）创建Thread子类的实例，即创建了线程对象。  
 （3）调用线程对象的start()方法来启动该线程。  
@@ -29,9 +29,9 @@ class MyThread0101 extends Thread {
     }
 }
 ```
-# **实现Runnable接口** 
-（1）定义runnable接口的实现类，并重写该接口的run()方法，该run()方法的方法体同样是该线程的线程执行体。  
-（2）创建 Runnable实现类的实例，并依此实例作为Thread的target来创建Thread对象，该Thread对象才是真正的线程对象。  
+### **实现Runnable接口** 
+（1）定义Runnable接口的实现类，并重写该接口的run()方法，该run()方法的方法体同样是该线程的线程执行体。  
+（2）创建Runnable实现类的实例，并以此实例作为Thread的target来创建Thread对象，该Thread对象才是真正的线程对象。  
 （3）调用线程对象的start()方法来启动该线程。  
 ```java
 public class Thread01Demo02 {
@@ -58,7 +58,7 @@ class MyThread0102 implements Runnable {
     }
 }
 ```
-# **通过Callable和Future** 
+### **通过Callable和Future** 
 （1）创建Callable接口的实现类，并实现call()方法，该call()方法将作为线程执行体，并且有返回值。  
 （2）创建Callable实现类的实例，使用FutureTask类来包装Callable对象，该FutureTask对象封装了该Callable对象的call()方法的返回值。  
 （3）使用FutureTask对象作为Thread对象的target创建并启动新线程。  
@@ -93,7 +93,7 @@ class MyThread0103 implements Callable {
     }
 }
 ```
-# **创建线程的三种方式对比**  
+### **创建线程的三种方式对比**  
 1. 采用实现Runnable、Callable接口的方式创见多线程时，线程类只是实现了Runnable 接口或Callable接口，还可以继承其他类。  
 2. 采用实现Runnable、Callable接口的方式创见多线程时，多个线程可以共享同一个target对象，所以非常适合多个相同线程类处理同一份资源的情况。  
 3. 使用继承Thread类的方式创建多线程时，编写简单，如果需要访问当前线程，则无需使用Thread.currentThread()方法，直接使用this即可获得当前线程。  
