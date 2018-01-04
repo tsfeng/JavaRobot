@@ -1,5 +1,5 @@
 Java线程到底存在几种状态？网络上存在各种说法。  
-在Thread类里有一个枚举类型State，定义了线程的几种状态，如下：
+在Thread类里有一个枚举类型State，定义了Java线程的几种状态，如下：
 ```java
 /**
  * A thread can be in only one state at a given point in time.
