@@ -7,8 +7,8 @@ Java线程到底存在几种状态？网络上存在各种说法。
  * any operating system thread states.
  */
 public enum State {
-    NEW,
     
+    NEW,
    /** 
     * Thread state for a runnable thread.  A thread in the runnable
     * state is executing in the Java virtual machine but it may
