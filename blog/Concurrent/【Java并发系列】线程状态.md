@@ -1,4 +1,5 @@
 线程到底存在几种状态？网络上存在各种说法。  
+
 在Thread类里有一个枚举类型State，定义了**Java线程**的几种状态，如下：
 ```java
 /**
@@ -47,8 +48,10 @@ Java线程状态示意图，如下：
 ![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/Thread02.png)
 Thread.State源码中的注释说明：  
 **一个线程在一个给定的时间点只能处于一种状态。**  
-**这些状态是虚拟机状态，它不反映任何操作系统的线程状态。**
+**这些状态是虚拟机状态，它不反映任何操作系统的线程状态。**  
 
+另附一张图：
+![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/ThreadStatus.png)
   
 
 
