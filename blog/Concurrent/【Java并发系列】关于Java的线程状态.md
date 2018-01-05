@@ -67,7 +67,7 @@ Java线程状态示意图，如下图：
 在这里我想说的是，你管它是N种还是M种！虚拟机层的存在，统一了这些差别。不管它是N还是M种，到了Java层面它们都被映射到了6种状态上来。自然，两个层面上有很多状态其实是大同小异的。至于具体差异，那是写虚拟机实现的那些家伙们去操心的事。
 > 有可能操作系统中的两种状态在JVM中则统一成了一种状态，也可能操作系统中的一种状态在JVM中又细分成了两种状态，谁知道呢？你也不想去知道，反正我是不想去知道。
 
-而很多关于操作系统上的书则常会提到有**5种进程（process）状态**：new，ready，running，waiting，terminated。
+而很多关于操作系统上的书则常会提到有**5种进程（process）状态**：new，ready，running，waiting，terminated。  
 示意图如下：
 ![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/Process_State.png)
 > 不幸的是，有很多人常常把这些进程状态，线程状态与Java线程状态混为一谈。
