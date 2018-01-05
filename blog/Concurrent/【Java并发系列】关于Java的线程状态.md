@@ -8,7 +8,7 @@ Java线程到底存在几种状态？网络上存在各种说法。
  * any operating system thread states.
  *
  * @since   1.5
- * @see #getState
+ * @see # getState
  */
 public enum State {
     
@@ -67,11 +67,21 @@ Java线程状态示意图，如下图：
 在这里我想说的是，你管它是N种还是M种！虚拟机层的存在，统一了这些差别。不管它是N还是M种，到了Java层面它们都被映射到了6种状态上来。自然，两个层面上有很多状态其实是大同小异的。至于具体差异，那是写虚拟机实现的那些家伙们去操心的事。
 > 有可能操作系统中的两种状态在JVM中则统一成了一种状态，也可能操作系统中的一种状态在JVM中又细分成了两种状态，谁知道呢？你也不想去知道，反正我是不想去知道。
 
-而很多关于操作系统上的书则常会提到有**5种进程（process）状态**：new，ready，running，waiting，terminated。    
+而很多关于操作系统的书则常会提到有**5种进程（process）状态**：new，ready，running，waiting，terminated。    
 示意图如下：
 ![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/Process_State.png)
+> 这里所谓进程状态指早期的那种单线程进程的状态。
+
+> 对于现在普遍的多线程进程，显然，谈论“进程状态”已经没有意义，应该谈论“进程下某个线程的状态”或者直接说“线程状态”。不过有时还是会把“进程状态”和“线程状态”混着去说。
+
+> 有些系统把线程叫成“轻量级进程”（light-weight process），所以还是在谈“进程状态”。
+
+> 有时则甚至既不叫“进程”，也不叫“线程”，它们叫“task”或者“job”。
+
 > 不幸的是，有很多人常常把这些进程状态，线程状态与Java线程状态混为一谈。
-> 比如看到Java只有RUNNABLE（可运行的）状态，就觉得这还不够呀，应该还有Running（运行中）状态；
+
+> 比如看到Java只有RUNNABLE（可运行的）状态，就觉得这还不够呀，应该还有Running（运行中）状态。
+
 > 又或者觉得RUNNABLE就是Running，所以应该还有个Ready（就绪）状态。
 
 ### **Java线程状态 VS 操作系统线程状态** 
@@ -83,7 +93,7 @@ Java线程状态示意图，如下图：
 附一张示意图：
 ![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/ThreadStatus.png)
   
-
+综上所述，为避免出现混乱，厘清概念所处的层次是非常重要的。如无特别说明，讨论均在JVM层面上。
 
 
 
