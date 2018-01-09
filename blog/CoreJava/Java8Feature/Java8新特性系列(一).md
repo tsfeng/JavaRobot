@@ -42,8 +42,8 @@ Java接口静态方法类似于默认方法，只是我们不能在实现类中�
 //接口
 public interface MyData {
 	default void print(String str) {
-		if (!isNull(str)){
-           System.out.println("MyData Print:" + str);
+		if (!isNull(str)){ 
+            System.out.println("MyData Print:" + str);
 		}
 	}
 	static boolean isNull(String str) {

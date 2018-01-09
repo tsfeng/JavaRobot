@@ -45,13 +45,14 @@ Stream的操作分为两种，分别为**中间操作**和**最终操作**。
 无状态中间操作是指元素的处理不受前面元素的影响；而有状态的中间操作必须等到所有元素处理之后才知道最终结果。比如排序是有状态操作，在读取所有元素之前并不能确定排序结果；  
 最终操作只能返回void或者一个非stream的结果。最终操作又可以分为**短路操作**和**非短路操作**。  
 短路操作是指不用处理全部元素就可以返回结果，比如找到第一个满足条件的元素。之所以要进行如此精细的划分，是因为底层对每一种情况的处理方式不同。  
-```table
-操作(-)    |   分类(<)   |   例子(<)  |  
+
+操作    |   分类   |   例子  |  
+:---:   |  :---:    |  :----------|  
 中间操作 |   无状态    |  filter()、map()、flatMap()、 peek()等
 中间操作 |   有状态    |  distinct()、sorted()、limit()、skip() 等
 最终操作 |   非短路   |  forEach()、count()等
 最终操作 |   短路      |  anyMatch()、findFirst()等
-```
+
 ### **Stream的操作步骤**  
 结合示例2的分解代码和下面的图片，来分析Stream的操作步骤。  
 ![](https://github.com/tsfeng/JavaRobot/raw/master/blog/CommonFile/abc.jpg)  
@@ -68,15 +69,15 @@ public class StreamDemo {
 }
 ```
 创建Stream的方式有多种，常见的总结如下:  
-- [x] 从 Collection 和数组
+- 从Collection和数组
     - Collection.stream()
     - Collection.parallelStream()
     - Arrays.stream(T array)
-- [x] 从Stream类的静态工厂方法
+- 从Stream类的静态工厂方法
     - 如 Stream.of(Object[]) 等
-- [x] 从 BufferedReader
+- 从BufferedReader
     - java.io.BufferedReader.lines()
-- [x] 其他方式
+- 其他方式
     - Random.ints()
     - BitSet.stream()
     - Pattern.splitAsStream(java.lang.CharSequence)
