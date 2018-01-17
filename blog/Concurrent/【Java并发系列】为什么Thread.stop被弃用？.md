@@ -90,7 +90,7 @@ Thread.currentThread().interrupt();
 例如，如果某个线程正在等待已知的socket，则可以关闭socket以使该线程立即返回。  
 不幸的是，实际上没有任何可行的通用技术。  
 **应该注意的是，在等待线程不响应Thread.interrupt的所有情况下，它也不会响应Thread.stop。**  
-这种情况包括故意的拒绝服务攻击，以及thread.stop和thread.interrupt不能正常工作的I / O操作。
+这种情况包括故意的拒绝服务攻击，以及Thread.stop和Thread.interrupt不能正常工作的I / O操作。
   
 ## **为什么Thread.suspend和Thread.resume被弃用？**
 Thread.suspend本质上是容易出现死锁的。  
