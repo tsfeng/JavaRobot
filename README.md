@@ -15,7 +15,6 @@
             - synchronized关键字
         - [访问控制修饰符](https://github.com/tsfeng/JavaRobot/blob/master/blog/CoreJava/Base/Java%E4%B8%AD%E7%9A%84%E8%AE%BF%E9%97%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6.md)
     - Java String  
-        - [String与CharSequence比较](https://github.com/tsfeng/JavaRobot/blob/master/blog/Interview/CharSequence%E4%B8%8EString%E7%9A%84%E5%8C%BA%E5%88%AB.md)
         - [String的hashCode为什么选择31作为乘数](https://github.com/tsfeng/JavaRobot/blob/master/blog/Interview/String%E7%9A%84hashCode%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A931%E4%BD%9C%E4%B8%BA%E4%B9%98%E6%95%B0.md)
     - Java Arrays
     - Java Collections
