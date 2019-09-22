@@ -35,6 +35,7 @@
 32.Iterator 怎么使用？有什么特点？  
 33.Iterator 和 ListIterator 有什么区别？  
 34.怎么确保一个集合不能被修改？  
+
 三、多线程  
 35.并行和并发有什么区别？  
 36.线程和进程的区别？  
@@ -58,15 +59,18 @@
 54.synchronized 和 Lock 有什么区别？  
 55.synchronized 和 ReentrantLock 区别是什么？  
 56.说一下 atomic 的原理？  
+
 四、反射  
 57.什么是反射？  
 58.什么是 java 序列化？什么情况下需要序列化？  
 59.动态代理是什么？有哪些应用？  
 60.怎么实现动态代理？  
+
 五、对象拷贝  
 61.为什么要使用克隆？  
 62.如何实现对象克隆？  
 63.深拷贝和浅拷贝区别是什么？  
+
 六、Java Web  
 64.jsp 和 servlet 有什么区别？  
 65.jsp 有哪些内置对象？作用分别是什么？  
@@ -78,12 +82,14 @@
 71.如何避免 sql 注入？  
 72.什么是 XSS 攻击，如何避免？  
 73.什么是 CSRF 攻击，如何避免？  
+
 七、异常  
 74.throw 和 throws 的区别？  
 75.final、finally、finalize 有什么区别？  
 76.try-catch-finally 中哪个部分可以省略？  
 77.try-catch-finally 中，如果 catch 中 return 了，finally 还会执行吗？  
 78.常见的异常类有哪些？  
+
 八、网络  
 79.http 响应码 301 和 302 代表的是什么？有什么区别？  
 80.forward 和 redirect 的区别？  
@@ -94,9 +100,11 @@
 85.get 和 post 请求有哪些区别？  
 86.如何实现跨域？  
 87.说一下 JSONP 实现原理？  
+
 九、设计模式  
 88.说一下你熟悉的设计模式？  
 89.简单工厂和抽象工厂有什么区别？  
+
 十、Spring/Spring MVC  
 90.为什么要使用 spring？  
 91.解释一下什么是 aop？  
@@ -112,6 +120,7 @@
 101.spring mvc 有哪些组件？  
 102.@RequestMapping 的作用是什么？  
 103.@Autowired 的作用是什么？  
+
 十一、Spring Boot/Spring Cloud  
 104.什么是 spring boot？  
 105.为什么要用 spring boot？  
@@ -122,6 +131,7 @@
 110.什么是 spring cloud？  
 111.spring cloud 断路器的作用是什么？  
 112.spring cloud 的核心组件有哪些？  
+
 十二、Hibernate  
 113.为什么要使用 hibernate？  
 114.什么是 ORM 框架？  
@@ -135,6 +145,7 @@
 122.hibernate 对象有哪些状态？  
 123.在 hibernate 中 getCurrentSession 和 openSession 的区别是什么？  
 124.hibernate 实体类必须要有无参构造函数吗？为什么？  
+
 十三、Mybatis  
 125.mybatis 中 #{}和 ${}的区别是什么？  
 126.mybatis 有几种分页方式？  
@@ -146,6 +157,7 @@
 132.mybatis 有哪些执行器（Executor）？  
 133.mybatis 分页插件的实现原理是什么？  
 134.mybatis 如何编写一个自定义插件？  
+
 十四、RabbitMQ  
 135.rabbitmq 的使用场景有哪些？  
 136.rabbitmq 有哪些重要的角色？  
@@ -163,13 +175,15 @@
 148.rabbitmq 集群搭建需要注意哪些问题？  
 149.rabbitmq 每个节点是其他节点的完整拷贝吗？为什么？  
 150.rabbitmq 集群中唯一一个磁盘节点崩溃了会发生什么情况？  
-151.rabbitmq 对集群节点停止顺序有要求吗？  
+151.rabbitmq 对集群节点停止顺序有要求吗？ 
+ 
 十五、Kafka  
 152.kafka 可以脱离 zookeeper 单独使用吗？为什么？  
 153.kafka 有几种数据保留的策略？  
 154.kafka 同时设置了 7 天和 10G 清除数据，到第五天的时候消息达到了 10G，这个时候 kafka 将如何处理？  
 155.什么情况会导致 kafka 运行变慢？  
 156.使用 kafka 集群需要注意什么？  
+
 十六、Zookeeper  
 157.zookeeper 是什么？  
 158.zookeeper 都有哪些功能？  
@@ -209,7 +223,8 @@
 190.redis 分布式锁有什么缺陷？  
 191.redis 如何做内存优化？  
 192.redis 淘汰策略有哪些？  
-193.redis 常见的性能问题有哪些？该如何解决？  
+193.redis 常见的性能问题有哪些？该如何解决？ 
+
 十九、JVM  
 194.说一下 jvm 的主要组成部分？及其作用？  
 195.说一下 jvm 运行时数据区？  
@@ -218,9 +233,40 @@
 198.什么是双亲委派模型？  
 199.说一下类加载的执行过程？  
 200.怎么判断对象是否可以被回收？  
+       
+     引用计数算法
+      
+        不能解决对象之间循环引用的问题
+        
+     可达性分析算法
+       
 201.java 中都有哪些引用类型？  
 202.说一下 jvm 有哪些垃圾回收算法？  
+    
+    标记-清除算法
+    复制算法=================新生代回收算法
+        1:1------->8:1:1
+    标记-整理算法 ============老年代回收算法
+    分代收集算法
+    
 203.说一下 jvm 有哪些垃圾回收器？  
+    
+    Serial 收集器
+        单线程：Stop The World
+        
+        ParNew 收集器：Serial 的多线程版本
+        
+        Serial Old 收集器：Serial 的老年代版本；单线程；标记-整理算法
+    
+    Parallel收集器
+        Parallel Scavenge 收集器：新生代收集器；多线程；复制算法
+        Parallel Old 收集器：Parallel Scavenge 的老年代版本；多线程；标记-整理算法
+            
+    CMS（Concurrent Mark Sweep）收集器
+    
+    G1（Garbage First）收集器
+    
+
 204.详细介绍一下 CMS 垃圾回收器？  
 205.新生代垃圾回收器和老生代垃圾回收器都有哪些？有什么区别？  
 206.简述分代垃圾回收器是怎么工作的？  
