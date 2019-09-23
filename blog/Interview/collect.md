@@ -70,19 +70,38 @@ Java 并发
 
 2、volatile 的实现原理？  
 3、Java 的信号灯？  
+
+    当Semaphore构造方法中传入的参数是1的时候，此时线程并发数最多是1个，即是线程安全的，
+    这种方式也可以做到现场互斥。
+    Java实现互斥线程同步有三种方式synchronized、lock 、单Semaphore
 4、synchronized 在静态方法和普通方法的区别？  
 
     synchronized修饰不加static的方法，锁是加在单个对象上，不同的对象没有竞争关系；
     修饰加了static的方法，锁是加载类上，这个类所有的对象竞争一把锁。
     
 5、怎么实现所有线程在等待某个事件的发生才会去执行？  
+
+
 6、CAS？CAS 有什么缺陷，如何解决？  
 7、synchronized 和 lock 有什么区别？  
 8、Hashtable 是怎么加锁的 ？ 
+
+    synchronized
 9、HashMap 的并发问题？  
 10、ConcurrenHashMap 介绍？1.8 中为什么要用红黑树？  
 11、AQS  
 12、如何检测死锁？怎么预防死锁？  
+
+    jstack
+    jconsole
+    
+    1、以确定的顺序获得锁
+    2、超时放弃
+    当使用synchronized关键词提供的内置锁时，只要线程没有获得锁，那么就会永远等待下去，
+    然而Lock接口提供了boolean tryLock(long time, TimeUnit unit) throws InterruptedException方法，
+    该方法可以按照固定时长等待锁，因此线程可以在获取锁超时以后，主动释放之前已经获得的所有的锁。
+    通过这种方式，也可以很有效地避免死锁。
+    
 13、Java 内存模型？  
 14、如何保证多线程下 i++ 结果正确？  
 15、线程池的种类，区别和使用场景？  
